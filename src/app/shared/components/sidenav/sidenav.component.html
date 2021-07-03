@@ -1,0 +1,48 @@
+
+<div class="uk-inline uk-margin d-flex justify-content-center ">
+  <img src="assets/img/Logo-LBG--01.png" style="width: 70%;" >
+</div>
+
+<div class="" id="sidebar">
+    <ul class="uk-nav uk-nav-default">
+
+
+      <li *ngFor="let menu of listMenu" routerLink="{{menu.url}}">
+        <span class="uk-margin-medium-right" uk-icon="menu.ukIcon"></span>
+        <!-- <i class="fa" [className]="menu.fontAwesomeIcon" aria-hidden="true"></i> -->
+
+        {{ menu.menuName }}
+      </li>
+
+      <!-- <li class="" routerLink="../admin/home" >
+        <span class="uk-margin-medium-right" uk-icon="thumbnails"></span>
+        Home
+      </li>
+
+      
+      <li class="" routerLink="../admin/admin" >
+        <span class="uk-margin-medium-right" uk-icon="check"></span>
+        Admin
+      </li>
+
+      <li class="" routerLink="../admin/berita" >
+        <span class="uk-margin-medium-right" uk-icon="file-edit"></span>
+        Berita
+      </li>
+
+      <li class="" routerLink="../admin/web-preferences" >
+        <span class="uk-margin-medium-right" uk-icon="file-edit"></span>
+        Website Preferences
+      </li>
+
+      <li class="" routerLink="../admin/contact" >
+        <span class="uk-margin-medium-right" uk-icon="check"></span>
+        Contact
+      </li> -->
+       
+    </ul>
+</div>
+  
+  
+  
+  

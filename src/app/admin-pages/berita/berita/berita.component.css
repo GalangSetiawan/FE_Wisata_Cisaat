@@ -1,0 +1,3 @@
+::ng-deep .errorStyle{
+    border: 1px solid red !important;
+}

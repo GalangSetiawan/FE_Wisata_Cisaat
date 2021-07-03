@@ -1,0 +1,85 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+.swal2-styled.swal2-cancel {
+  border-radius: 20px !important;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  background-color: transparent !important;
+  color: #333 !important;
+  border: 1px solid #e5e5e5 !important;
+  font-size: .875rem !important;
+  font-weight: 100 !important;
+  text-transform: uppercase !important;
+
+}
+
+
+.swal2-styled.swal2-cancel:hover,
+.swal2-styled.swal2-confirm:hover{
+  border : none !important;
+}
+
+.swal2-styled.swal2-confirm {
+  border-radius: 20px !important;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  background-color: #A6C91A !important;
+  color: #fff !important;
+  font-size: .875rem !important;
+  font-weight: 100 !important;
+  text-transform: uppercase !important;
+}
+
+.swal2-popup{
+  border-radius: 20px !important;
+}
+.uk-modal-body{
+  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-top-left-radius: 20px !important;
+}
+
+.rounded-top-right{
+  border-top-right-radius: 20px !important;
+}
+
+.rounded-top-left{
+  border-top-left-radius: 20px !important;
+}
+
+.p-datatable-footer{
+  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+}
+
+.uk-button{
+  border-radius: 20px !important;
+  margin: 2px;
+}
+
+.uk-button-primary {
+  background-color: #A6C91A;
+  color: #fff;
+  border: 1px solid transparent;
+}
+/* Hover + Focus */
+.uk-button-primary:hover,
+.uk-button-primary:focus {
+  background-color: #8CAF00;
+  color: #fff;
+}
+/* OnClick + Active */
+.uk-button-primary:active,
+.uk-button-primary.uk-active {
+  background-color: #739600;
+  color: #fff;
+}
+
+.hover-primary:hover{
+  color: #739600;
+}

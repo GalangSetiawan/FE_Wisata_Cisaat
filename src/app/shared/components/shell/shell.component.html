@@ -1,0 +1,120 @@
+
+
+
+<div class="background">
+	<div class="uk-grid-collapse" uk-grid style="height: 100vh;">
+		<div class="uk-width-1-6@s uk-animation-slide-left sidebar p-3" id="toggle-sidebar"  >
+			<div class="uk-card  uk-card-body rounded-all " style="height: 100%; background-color: white">
+			  <app-sidenav></app-sidenav>
+			</div>
+		</div>
+		<div class="uk-width-expand@s" style="max-height: 100vh; overflow-y: auto;">
+	  
+			  <div class="uk-section uk-padding-remove-vertical  m-4">
+				  <div class="s">
+					  <div class="uk-grid uk-margin-remove-top">
+						  <div class="uk-width-1-2 uk-width-expand@m">
+							  <!-- <div class="uk-flex uk-flex-middle">
+								  <a class="uk-logo uk-navbar-item" href="#">
+									  <img src="https://uikitbase.com/library/logo-dark.png" data-src="https://uikitbase.com/library/logo-dark.png" alt="Logo" uk-img>
+								  </a>
+							  </div> -->
+			  
+					  <div class="uk-navbar-left">
+			  
+					  <ul class="uk-navbar-nav">
+						  <li class="uk-active sidebar"  uk-toggle="target: #toggle-sidebar">
+							  <a uk-icon="icon: menu"></a>
+						  </li>
+						  
+					  </ul>
+			  
+					  </div>
+			  
+					  
+						  </div>
+						  <div class="uk-width-1-2 uk-width-auto@m">
+							  <nav class="uk-navbar-container uk-navbar-transparent uk-visible@m" uk-navbar>
+			  
+					  
+			  
+					  
+								  <ul class="uk-navbar-nav">
+									  <!-- <li class="uk-active"><a href="#">Home</a></li>
+									  <li>
+										  <a href="#">Services</a>
+										  <div class="uk-navbar-dropdown">
+											  <ul class="uk-nav uk-navbar-dropdown-nav">
+												  <li><a href="#">Ocean freight forwarding</a></li>
+												  <li><a href="#">Customs house brokerage</a></li>
+												  <li><a href="#">Transportation & Distribution</a></li>
+											  </ul>
+										  </div>
+									  </li>
+									  <li><a href="#">News</a></li>
+									  <li><a href="#">About Us</a></li> -->
+									  <!-- <li><a uk-toggle="target: #modal-logout" >Logout</a></li> -->
+									  	<li>
+											<div class="user-wrapper"> 
+												<img src="assets/img/Logo-LBG--01.png" uk-toggle="target: #modal-logout" alt="">
+												<div class="user-detail">
+													<small><b>Administrador</b></small> <br>
+													<small>{{ currentUser.username }}</small>
+												</div>
+											</div>
+										</li>
+								  </ul>
+							  </nav>
+							  <div class="uk-height-1-1 uk-flex uk-flex-right uk-flex-middle uk-hidden@m">
+								  <a class="uk-button" href="#modal-mobile-nav" uk-toggle>
+									  <span uk-navbar-toggle-icon></span>
+								  </a>
+							  </div>
+							  <div id="modal-mobile-nav" class="uk-modal-full" uk-modal>
+								  <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
+									  <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+									  <div class="uk-width-large uk-padding-large">
+										  <ul class="uk-nav-primary uk-nav-parent-icon" uk-nav>
+											  <li class="uk-active"><a href="#">Home</a></li>
+											  <li class="uk-parent">
+												  <a href="#">Services</a>
+												  <ul class="uk-nav-sub">
+													  <li><a href="#">Ocean freight forwarding</a></li>
+													  <li><a href="#">Customs house brokerage</a></li>
+													  <li><a href="#">Transportation & Distribution</a></li>
+												  </ul>
+											  </li>
+											  <li><a href="#">News</a></li>
+											  <li><a href="#">About Us</a></li>
+											  <li><a href="#">Contacts</a></li>
+										  </ul>
+										  <a href="#" class="uk-button uk-button-primary uk-border-rounded uk-align-center">Login</a>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+	  
+	  
+			  <div class="uk-card uk-card-body rounded-all m-4 background " style="background-color: white; ">
+				  <router-outlet></router-outlet>
+			  </div>
+		</div>
+	  </div>
+	  
+</div>
+
+
+<!-- This is the modal -->
+<div id="modal-logout" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Konfirmasi</h2>
+		<p>Apakah anda yakin ingin keluar aplikasi?</p>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Kembali</button>
+            <button class="uk-button uk-button-primary uk-modal-close"  (click)="logout()" type="button">Logout</button>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,276 @@
+<p-toast></p-toast>
+
+<div class="uk-form-stacked"  style="height: auto;" >
+
+    <main class="main">
+        <!--==================== HOME ====================-->
+        <section class="home" id="home">
+
+
+            <span *ngIf="inputForm.value.imageUrl == null">
+
+            </span>
+            <img src="assets/img/img1.jpg" alt="" class="home__img" *ngIf="inputForm.value.imageUrl == null">
+            <img [src]="inputForm.value.imageUrl" class="home__img" *ngIf="inputForm.value.imageUrl != null" >
+
+            <h1 style="position: absolute; color: white;"> {{f.websiteName.value}} </h1>
+            
+            <a class="uk-position-absolute uk-transform-center" (click)="btnOpenModalUploadImage()" href="#modal-edit-image" uk-toggle style="
+            right: 15%; 
+            top: 15%; 
+            background: #8CAF00; 
+            color: white;     
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            padding: 5px;"
+            uk-icon="icon: pencil" >
+            </a>
+
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <span class="home__data-subtitle">Discover your place</span>
+                    <h1 class="home__data-title">Explore The <br> Best <b>Beautiful <br> Beaches</b></h1>
+                    <a href="#" class="button">Explore</a>
+
+                </div>
+
+                <div class="home__social  mb-5">
+                    <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
+                        <i class="ri-facebook-box-fill"></i>
+                    </a>
+                    <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
+                        <i class="ri-instagram-fill"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="home__social-link">
+                        <i class="ri-twitter-fill"></i>
+                    </a>
+                </div>
+
+                <div class="home__info mb-5" >
+                    <div>
+                        <span class="home__info-title">5 best places to visit</span>
+                        <a href="" class="button button--flex button--link home__info-button">
+                            More <i class="ri-arrow-right-line"></i>
+                        </a>
+                    </div>
+
+                    <div class="home__info-overlay">
+                        <img src="assets/img/home2.jpg" alt="" class="home__info-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--==================== ABOUT ====================-->
+        <section class="discover" id="discover">
+            <div class="discover__container container grid">
+
+                <div class="uk-margin-medium-top">
+                    <ul class="uk-flex-center" uk-tab>
+                        <li [class.uk-active]="viewMode=='general'"><a (click)="viewMode='general'">General</a></li>
+                        <li [class.uk-active]="viewMode=='contact'"><a (click)="viewMode='contact';getAllContact()">Contact</a></li>
+                        <li [class.uk-active]="viewMode=='message'"><a (click)="viewMode='message'">Message</a></li>
+                    </ul>
+                </div>
+
+                <div [ngSwitch]="viewMode">
+                    <div *ngSwitchCase="'general'">
+                        <form [formGroup]="inputForm"  (ngSubmit)="onSubmit()">
+                            <fieldset class="uk-fieldset">
+                        
+                                <legend class="uk-legend mb-5">Website Preferences</legend>
+        
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Judul Website</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" formControlName="websiteName" type="text" placeholder="Nama Website"  [ngClass]="{ 'uk-form-danger':  submitted && f.websiteName.errors }" >
+                                        <div *ngIf="submitted && f.websiteName.errors" class="text-danger">
+                                            <div *ngIf="f.websiteName.errors.required">Title is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="uk-margin">
+                                    <div class="uk-form-label">Alamat</div>
+                                    <div class="uk-form-controls">
+                                        <dx-html-editor formControlName="address" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.address.errors }">
+                                            <dxo-toolbar>
+                                                <dxi-item formatName="undo"></dxi-item>
+                                                <dxi-item formatName="redo"></dxi-item>
+                                                <dxi-item formatName="separator"></dxi-item>
+                                                <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
+                                                <dxi-item formatName="separator"></dxi-item>
+                                                <dxi-item formatName="bold"></dxi-item>
+                                                <dxi-item formatName="italic"></dxi-item>
+                                                <dxi-item formatName="strike"></dxi-item>
+                                                <dxi-item formatName="underline"></dxi-item>
+                                                <dxi-item formatName="separator"></dxi-item>
+                                                <dxi-item formatName="alignLeft"></dxi-item>
+                                                <dxi-item formatName="alignCenter"></dxi-item>
+                                                <dxi-item formatName="alignRight"></dxi-item>
+                                                <dxi-item formatName="alignJustify"></dxi-item>
+                                                <dxi-item formatName="separator"></dxi-item>
+                                            </dxo-toolbar>
+                                        </dx-html-editor>   
+        
+                                        <div *ngIf="submitted && f.address.errors" class="text-danger">
+                                            <div *ngIf="f.address.errors.required">Isi Berita is required</div>
+                                        </div>              
+        
+                                    </div>
+                                </div>
+                            
+                            
+                                <div class="uk-margin">
+                                    <div class="uk-form-label">Google Map</div>
+                                    <div class="uk-form-controls">
+                                        <textarea class="uk-textarea" rows="5" (change)="generateMap(f.mapLocation.value)"  formControlName="mapLocation" placeholder="Google Map embeded" [ngClass]=" { 'errorStyle' : submitted && f.mapLocation.errors }"></textarea>
+                                        <div *ngIf="submitted && f.mapLocation.errors" class="text-danger">
+                                            <div *ngIf="f.mapLocation.errors.required">Title is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                
+                                <p class="uk-text-right">
+                                    <button type="submit" class="uk-button uk-button-primary">Simpan</button>
+                                </p>
+        
+        
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div *ngSwitchCase="'contact'">
+                        <p-table [value]="contactList" dataKey="id" editMode="row">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                
+                                    <button pButton pRipple icon="pi pi-plus" (click)="onRowAddData();" class="p-button-rounded p-button-text"></button>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" >
+                                <tr>
+                                    <th width="50">No.</th>
+                                    <th>Nama </th>
+                                    <th>Media Sosial</th>
+                                    <th>Link</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-editing="editing">
+                                <tr  [pEditableRow]="rowData">
+                                    <td width="50">{{rowIndex + 1}}</td>
+
+
+                                    <td pEditableColumn>
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text"  [disabled]="!editing" [(ngModel)]="rowData.nama">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{rowData.nama}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+
+                                    <td pEditableColumn>
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text"  [disabled]="!editing" [(ngModel)]="rowData.sosialMedia">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{rowData.sosialMedia}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+
+                                    <td pEditableColumn>
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text"  [disabled]="!editing" [(ngModel)]="rowData.link">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                <a href="{{rowData?.link}}" target="_blank">{{rowData?.link}}</a>                                            
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+
+
+
+                                    <td style="text-align:center">
+                                        <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditDelete(rowData, rowIndex)" class="p-button-rounded p-button-text p-button-danger"></button>
+                                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
+                                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(rowData)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, rowIndex)" class="p-button-rounded p-button-text p-button-danger"></button>
+                                    </td>
+
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    total data : {{contactList ? contactList.length : 0 }}
+                                </div>
+
+                            
+                            </ng-template>
+                            
+                        </p-table>
+
+
+                    </div>
+                    <div *ngSwitchCase="'message'">Message Content</div>
+                    <div *ngSwitchDefault>default content</div>
+                </div>
+
+
+
+                
+
+
+                
+
+            </div>
+        </section>
+
+    </main>
+
+    <div id="box">
+
+    </div>
+
+    
+
+</div>
+
+
+
+
+
+<!-- modal-edit-image -->
+<div id="modal-edit-image" class="uk-flex-top" uk-modal>    
+    <div class="uk-modal-dialog uk-margin-auto-vertical uk-modal-body">
+        <h2 class="uk-modal-title">Upload Gambar</h2>
+
+        <div class="uk-form-controls mt-3">
+            <input class="uk-input" type="File" (change)="handleFileInput($event.target.files)" placeholder="Masukan Gambar Latar Belakang..."   [ngClass]="{ 'uk-form-danger':  inputForm.value.imageUrl == null }">
+            <div *ngIf="inputForm.value.imageUrl == null" class="uk-text-danger uk-text-italic">
+              <div >Latar Belakang berita wajib diisi</div>
+            </div>
+        </div>
+        <br>
+
+
+        <img width="100%" *ngIf="inputForm.value.imageUrl != null" [src]="inputForm.value.imageUrl" class="image">
+
+        <p class="uk-text-right mt-4">
+            <button class="uk-button uk-button-default uk-modal-close" (click)="btnCancelUpload()" type="button" id="btnHapus">Batal</button> &nbsp;
+            <button class="uk-button uk-button-primary uk-modal-close" type="button">Simpan</button>
+        </p>
+    </div>
+</div>
+<!-- modal-edit-image -->
+
+

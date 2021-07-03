@@ -1,0 +1,14 @@
+#sidebar ul li:hover {
+    background-color: #8CAF00;
+    border-top-left-radius: 20px ;
+    border-top-right-radius: 20px ;
+    border-bottom-right-radius: 20px ;
+    color: white;
+    font-weight: bold;
+    
+}
+
+#sidebar ul li {
+    padding: 20px;
+    color: #546e7a;
+}
