@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { PipesModule } from 'src/app/_helpers/html-pipe/html-pipe.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { BeritaRoutingModule } from './berita-routing.module';
-import { BeritaComponent } from './berita/berita.component';
+import { SejarahRoutingModule } from './sejarah-routing.module';
+import { SejarahComponent } from './sejarah/sejarah.component';
 
 
 //dev extreme module
@@ -13,14 +13,11 @@ import { DxHtmlEditorModule, DxCheckBoxModule } from 'devextreme-angular';
 import { TableModule } from 'primeng/table';
 
 
-@NgModule({
-  declarations: [
-    BeritaComponent,
 
-  ],
+@NgModule({
   imports: [
     CommonModule,
-    BeritaRoutingModule,
+    SejarahRoutingModule,
     FormsModule,
     ReactiveFormsModule,
 
@@ -32,11 +29,7 @@ import { TableModule } from 'primeng/table';
     TableModule,
     //dev extreme module
 
-
   ],
-  exports: [
-    // HtmlPipe
-  ]
-  
+  declarations: [SejarahComponent]
 })
-export class BeritaModule { }
+export class SejarahModule { }

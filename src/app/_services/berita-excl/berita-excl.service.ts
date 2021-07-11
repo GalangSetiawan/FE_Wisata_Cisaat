@@ -5,11 +5,11 @@ import { switchMap, map, tap } from 'rxjs/operators';
 import { ServerApiService } from './../server-api/server-api.service'
 
 
-export class modelBerita {
+export class data {
   id       : Number;
   title    : string;
   likes    : string;
-  tags     : string;
+  groups     : string;
   imageNews: FileList;
   userId   : string;
   news     : string;
@@ -19,9 +19,9 @@ export class modelBerita {
 @Injectable({
   providedIn: 'root'
 })
-export class BeritaService {
+export class BeritaExclService {
   public baseUrl:string
-  public serviceURL = '/api/berita'
+  public serviceURL = '/api/berita-excl'
 
   constructor(
     private http: HttpClient,
@@ -30,14 +30,14 @@ export class BeritaService {
       this.baseUrl = (this.serverApiService.getAPI()) + this.serviceURL;
     }
 
-  postBerita(data: modelBerita){
-    var request:modelBerita = data;
+  create(data: data){
+    var request:data = data;
     var formData = new FormData();
     if(data.imageNews != null){
       Array.from(data.imageNews).forEach(f => formData.append('imageNews',f))
     }
     formData.append('title',request.title)
-    formData.append('tags',request.tags)
+    formData.append('groups',request.groups)
     formData.append('userId',request.userId)
     formData.append('news',request.news)
 
@@ -46,30 +46,30 @@ export class BeritaService {
   }
 
   
-  updateBerita(data: modelBerita){
-    var request:modelBerita = data;
+  update(data: data){
+    var request:data = data;
     var formData = new FormData();
     if(data.imageNews != null){
       Array.from(data.imageNews).forEach(f => formData.append('imageNews',f))
     }
     formData.append('title',request.title)
-    formData.append('tags',request.tags)
+    formData.append('groups',request.groups)
     formData.append('userId',request.userId)
     formData.append('news',request.news)
     return this.http.put(`${this.baseUrl}/${data.id}`, formData);
   }
 
 
-  getAllBerita(){
+  getAll(){
     return this.http.get(this.baseUrl);
   }
 
-  deleteBerita(id){
+  delete(id){
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
 
-  downloadImageBerita(id): Observable<any> {
+  getImgById(id): Observable<any> {
     return this.http.get(this.baseUrl+'/img/'+id,  { responseType: 'blob' })
     .pipe(
       switchMap(response => this.readFile(response))

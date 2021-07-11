@@ -44,6 +44,24 @@ export class SidenavComponent implements OnInit {
       menuName : 'Website Preferences',
       url : '../admin/web-preferences'
     },
+    {
+      fontAwesomeIcon : 'fa-home',
+      ukIcon : 'check',
+      menuName : 'Sejarah Cisaat',
+      url : '../admin/sejarah'
+    },
+    {
+      fontAwesomeIcon : 'fa-home',
+      ukIcon : 'check',
+      menuName : 'Paket Wisata',
+      url : '../admin/paket-wisata'
+    },
+    {
+      fontAwesomeIcon : 'fa-home',
+      ukIcon : 'check',
+      menuName : 'Fasilitas',
+      url : '../admin/fasilitas'
+    },
     
   ]
 

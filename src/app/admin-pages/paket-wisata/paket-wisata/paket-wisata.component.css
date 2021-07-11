@@ -1,0 +1,60 @@
+::ng-deep .errorStyle{
+    border: 1px solid red !important;
+}
+
+
+
+/*=============== DISCOVER ===============*/
+
+
+
+.discover__card {
+    position: relative;
+    width: 270px;
+    overflow: var(--img-hidden);
+  }
+
+
+  .description{
+    display: none;
+  }
+
+  .discover__card:hover .description {
+    display: block;
+  }
+ 
+  
+  .discover__data {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1rem;
+  }
+  
+  .discover__title, 
+  .discover__description {
+    color: var(--white-color);
+  }
+  
+  .discover__title {
+    font-size: var(--h3-font-size);
+    margin-bottom: var(--mb-0-25);
+  }
+  
+  .discover__description {
+    display: block;
+    font-size: var(--smaller-font-size);
+  }
+  
+  .discover__img {
+    transition: var(--img-transition);
+  }
+  
+  .discover__img:hover {
+    transform: var(--img-scale);
+  }
+  
+  .swiper-container-3d .swiper-slide-shadow-left,
+  .swiper-container-3d .swiper-slide-shadow-right {
+    background-image: none;
+  }
+  

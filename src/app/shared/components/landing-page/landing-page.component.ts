@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 declare var Swiper:any 
 declare var ScrollReveal:any 
 import { Router } from '@angular/router';
-
+import * as $ from 'jquery'
+import { element } from 'protractor';
+// declare var $: any;
 
 
 @Component({
@@ -15,7 +17,9 @@ export class LandingPageComponent implements OnInit {
   constructor(
     public router: Router,
 
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.swiper()
@@ -114,6 +118,59 @@ export class LandingPageComponent implements OnInit {
         localStorage.setItem('selected-theme', getCurrentTheme())
         localStorage.setItem('selected-icon', getCurrentIcon())
     })
+  }
+
+
+  public navActive(event){
+
+
+    console.log('navActive ==>',event);
+    
+    //scroll to id
+    var selectedId = event.target.name
+    var el = document.getElementById(selectedId);
+    el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
+    
+    //highlight selected id
+    var elements = []; 
+    $("main").find("section").each(function(){ elements.push(this.id); });
+    console.log('elements ===>',elements);
+    
+
+
+    if(selectedId == 'blog'){
+      elements.forEach(sectionId => {
+        var menu = document.getElementById(sectionId)
+        if(sectionId == 'blog') menu.classList.remove('hidden-element');
+        else  menu.classList.add('hidden-element');
+      });
+    }else{
+      elements.forEach(sectionId => {
+        var menu = document.getElementById(sectionId)
+        if(sectionId == 'blog') menu.classList.add('hidden-element');
+        else menu.classList.remove('hidden-element');
+      });    
+    }
+
+
+    
+
+    elements.forEach(sectionId => {
+      if(selectedId == sectionId){
+        // document.querySelector('.nav__menu a[href*=#' + sectionId + ']').classList.add('active-link');
+        $('.nav__menu a[name=' + sectionId + ']').addClass('active-link')
+      }else{
+        // document.querySelector('.nav__menu a[href*=#' + sectionId + ']').classList.remove('active-link')
+        $('.nav__menu a[name=' + sectionId + ']').removeClass('active-link')
+
+      }
+    });
+
+
+
+
+
+
   }
 
   public swiper(){

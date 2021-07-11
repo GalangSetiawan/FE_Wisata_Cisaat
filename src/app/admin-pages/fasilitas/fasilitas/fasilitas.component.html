@@ -1,0 +1,156 @@
+<section id="team" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">OUR TEAM</h5>
+        <div class="row">
+            
+            <ng-container *ngFor="let data of dataGridList">
+                <div class="col-xs-12 col-sm-6 col-md-3" >
+                    <div class="image-flip" >
+                        <div class="mainflip flip-0">
+                            <div class="frontside">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <p class="custom-icon"> <i class="fa" [ngClass]="data.icon" aria-hidden="true"></i> </p>
+                                        <h4 class="card-title">{{data.namaFasilitas}}</h4>
+                                        <!-- <p class="card-text">{{data.deskripsi}}</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="backside" style="width: 100%;">
+                                <div class="card">
+                                    <div class="card-body text-center mt-4">
+                                        <h4 class="card-title">Sunlimetech</h4>
+                                        <p class="card-text">
+                                            {{data.deskripsi}}
+                                        </p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</section>
+
+
+
+<div class="uk-alert-danger" uk-alert *ngIf="currentUser == undefined">
+    <a class="uk-alert-close" uk-close></a>
+    <p>kamu tidak memiliki akses</p>
+</div>
+
+
+<div id="modal-form" class="uk-modal-container" uk-modal uk-modal="bg-close:false; esc-close:false">
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Sejarah Desa</h2>
+
+        <form [formGroup]="inputForm"  (ngSubmit)="onSubmit()">
+            <div class="uk-card-body">
+
+                
+                <fieldset class="uk-fieldset">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Nama Fasilitas</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" formControlName="namaFasilitas" type="text" placeholder="Some text..." [ngClass]="{ 'uk-form-danger':  submitted && f.namaFasilitas.errors }">
+                            <div *ngIf="submitted && f.namaFasilitas.errors" class="text-danger">
+                                <div *ngIf="f.namaFasilitas.errors.required">Nama Fasilitas is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Icon</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" formControlName="icon" type="text" placeholder="ex fa-home" [ngClass]="{ 'uk-form-danger':  submitted && f.icon.errors }">
+                            <div *ngIf="submitted && f.icon.errors" class="text-danger">
+                                <div *ngIf="f.icon.errors.required">Icon is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+            
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Deskripsi</label>
+                        <div class="uk-form-controls">
+
+                            <textarea class="uk-textarea" rows="5" formControlName="deskripsi" placeholder="Deskripsi Fasilitas" [ngClass]=" { 'errorStyle' : submitted && f.deskripsi.errors }"></textarea>
+                            <div *ngIf="submitted && f.deskripsi.errors" class="text-danger">
+                                <div *ngIf="f.deskripsi.errors.required">Deskripsi is required</div>
+                            </div>
+                                        
+                        </div>
+                    </div>
+
+                </fieldset>
+
+            </div>
+
+
+            <p class="uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" (click)="onBatalTambahClick()">BATAL</button>
+                <button type="submit" class="uk-button uk-button-primary">SIMPAN</button>
+            </p>
+
+        </form>
+        
+        
+    </div>
+</div>
+
+<style>
+    .smallText{
+        white-space: nowrap; 
+        /* width: 100%;  */
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
+
+    
+    .p-datatable .p-datatable-tbody > tr > td{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+</style>
+
+<p class="uk-text-right mt-4">
+    <button class="uk-button uk-button-primary" (click)="onTambahClick()" uk-toggle="target: #modal-form" type="button">Tambah</button>
+</p>
+
+<p-table [value]="dataGridList">
+    <ng-template pTemplate="header" >
+        <tr>
+            <th class="rounded-top-left" width="50">No.</th>
+            <th> Nama Fasilitas </th>
+            <th> Deskripsi</th>
+            <th> Icon </th>
+            <th class="rounded-top-right" style="text-align: center;">Action</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr>
+            <td width="50">{{rowIndex + 1}}</td>
+            <td>{{rowData.namaFasilitas}}</td>
+            <td  class="smallText">
+                {{rowData.deskripsi}}
+            </td>
+            <td>{{rowData.icon}}</td>
+            <td style="text-align: center;">
+                <span uk-icon="trash" class="btnEfect hover-primary m-2" (click)="onDeleteRow(rowData)"></span>
+                <span uk-icon="pencil" class="btnEfect hover-primary m-2" uk-toggle="target: #modal-form" (click)="onEditRow(rowData)"></span>
+                <span uk-icon="info" class="btnEfect hover-primary m-2" (click)="onViewRow(rowData)"></span>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            total data : {{dataGridList ? dataGridList.length : 0 }}
+        </div>
+    </ng-template>
+    
+</p-table>

@@ -9,6 +9,7 @@ import { NotAuthComponent } from './components/not-auth/not-auth.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { LoginComponent } from './components/login/login.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { BeritaComponent } from './components/berita/berita.component';
 
 const materialModules = [
   FlexLayoutModule
@@ -27,6 +28,7 @@ const materialModules = [
     ShellComponent, 
     LoginComponent, 
     LandingPageComponent,
+    BeritaComponent
   ],
 
   exports: [

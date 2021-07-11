@@ -1,0 +1,348 @@
+<section class="discover" id="discover">
+    <h2 class="section__title">Tawaran </h2>
+
+
+
+    <div class="uk-slider-container-offset discover" uk-slider style="max-width: 820px; height: 600px; margin-left: auto; margin-right: auto;">
+
+        <div class="uk-position-relative uk-visible-toggle uk-light swiper-container" tabindex="-1">
+    
+            <ul class="uk-slider-items uk-child-width-1-3@s uk-grid swiper-wrapper">
+
+                <li *ngFor="let data of dataGridList">
+                    <div class="discover__card swiper-slide uk-card uk-card-default">
+                        <div class="uk-card-media-top">
+                            <img [src]="data.imageUrl" alt="" class="discover__img" style="height: 400px; width:100%; object-fit:cover;">
+                        </div>
+                        <div class="uk-overlay  uk-position-top">
+                            <div class="discover__data ">
+                                <h2 class="discover__title">IDR. {{ data.priceMask }}</h2>
+                            </div>
+                        </div>
+                        <div class="uk-overlay uk-position-center description" style="color: white;">
+                            <div [innerHTML]="data.description | keepHtml" style="zoom: 0.8;"></div>
+                        </div>
+                        <div class="uk-overlay uk-position-bottom">
+                            <div class="discover__data">
+                                <h2 class="discover__title">{{data.title}}</h2>
+                                <span class="discover__description">{{data.time}}</span>
+                            </div>
+                        </div>
+
+                        <button class="button button--flex place__button">
+                            <i class="ri-arrow-right-line"></i>
+                        </button>
+
+                    </div>
+                </li>
+
+
+                <li style="display: none;">
+                    <div class="discover__card swiper-slide uk-card uk-card-default">
+                        <div class="uk-card-media-top">
+                            <img src="https://getuikit.com/docs/images/photo.jpg" alt="" class="discover__img" style="height: 400px; width:100%; object-fit:cover;">
+                        </div>
+                        <div class="uk-overlay uk-overlay-default uk-position-top">
+                            <span class="uk-badge">IDR : 200k</span>
+                        </div>
+                        <div class="uk-overlay uk-overlay-default uk-position-center">
+                            <p>Center</p>
+                        </div>
+                        <div class="uk-overlay uk-position-bottom">
+                            <div class="discover__data">
+                                <h2 class="discover__title">Hawaii</h2>
+                                <span class="discover__description">15 tours available</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+    
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+    
+        </div>
+    
+    </div>
+
+</section>
+
+
+
+
+
+
+
+<div class="uk-alert-danger" uk-alert *ngIf="currentUser == undefined">
+    <a class="uk-alert-close" uk-close></a>
+    <p>kamu tidak memiliki akses</p>
+</div>
+
+
+<div id="modal-form" class="uk-modal-container" uk-modal uk-modal="bg-close:false; esc-close:false">
+    <div class="uk-modal-dialog uk-modal-body">
+        <!-- <h2 class="uk-modal-title">{{ inputForm?.controls?.title?.value }}</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+        
+        <div class="uk-card-header">
+            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                    <img class="uk-border-circle" style="width: 50px; height: 50px;"  *ngIf="inputForm.value.imageUrl != null" [src]="inputForm.value.imageUrl">
+                </div>
+                <div class="uk-width-expand">
+                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ inputForm?.controls?.title?.value }}</h3>
+                    <!-- <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2016</time></p> -->
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="inputForm"  (ngSubmit)="onSubmit()">
+            <span class="toggleForm">
+                <div class="uk-card-body">
+
+                
+                    <fieldset class="uk-fieldset">
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">Judul Paket Wisata</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" formControlName="title" type="text" placeholder="Some text..." [ngClass]="{ 'uk-form-danger':  submitted && f.title.errors }">
+                                <div *ngIf="submitted && f.title.errors" class="text-danger">
+                                    <div *ngIf="f.title.errors.required">Title is required</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin" *ngIf="inputForm.value.imageUrl == null">
+                            <label class="uk-form-label" for="form-stacked-text">Gambar Paket Wisata</label>
+                            <input class="uk-input" type="File" (change)="handleFileInput($event.target.files)" placeholder="Masukan Gambar Latar Belakang..." >                       
+                        </div>
+                            
+                        <div class="uk-cover-container uk-height-medium" *ngIf="inputForm.value.imageUrl != null">
+                            <img data-src="{{inputForm.value.imageUrl}}" alt="" uk-cover>
+                            <a class="uk-position-absolute uk-transform-center" (click)="btnOpenModalUploadImage()" uk-toggle="target: .toggleForm" style="
+                            left: 20%; 
+                            top: 30%; 
+                            background: #0F7AE5; 
+                            color: white;     
+                            border-radius: 50%;
+                            width: 30px;
+                            height: 30px;
+                            padding: 5px;"
+                            uk-icon="icon: pencil" >
+                            </a>
+                            <h1 class="uk-position-center" *ngIf="inputForm.value.title != ''">
+                                <span style="border-left: 12px solid #0F7AE5; border-bottom: 15px solid transparent; color: white;">  &nbsp; {{ inputForm.controls.title?.value }} </span> 
+                            </h1>
+                        </div>
+    
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text"> Durasi Waktu Wisata </label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" formControlName="time" type="text" placeholder="Durasi Waktu Wisata" [ngClass]="{ 'uk-form-danger':  submitted && f.time.errors }">
+                                <div *ngIf="submitted && f.time.errors" class="text-danger">
+                                    <div *ngIf="f.time.errors.required">Durasi Waktu Wisata is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text"> Harga </label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" formControlName="price" autocomplete="off" currencyInput maxDigits="9" type="text" placeholder="Harga" [ngClass]="{ 'uk-form-danger':  submitted && f.price.errors }">
+                                <div *ngIf="submitted && f.price.errors" class="text-danger">
+                                    <div *ngIf="f.price.errors.required">Harga is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                
+                        <div class="uk-margin">
+                            <div class="uk-form-controls">
+                                <dx-html-editor formControlName="description" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.description.errors }">
+                                    <dxo-toolbar>
+                                        <dxi-item formatName="undo"></dxi-item>
+                                        <dxi-item formatName="redo"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+                                        <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="bold"></dxi-item>
+                                        <dxi-item formatName="italic"></dxi-item>
+                                        <dxi-item formatName="strike"></dxi-item>
+                                        <dxi-item formatName="underline"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="alignLeft"></dxi-item>
+                                        <dxi-item formatName="alignCenter"></dxi-item>
+                                        <dxi-item formatName="alignRight"></dxi-item>
+                                        <dxi-item formatName="alignJustify"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="orderedList"></dxi-item>
+                                        <dxi-item formatName="bulletList"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="color"></dxi-item>
+                                        <dxi-item formatName="background"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="link"></dxi-item>
+                                        <dxi-item formatName="image"></dxi-item>
+                                        <dxi-item formatName="separator"></dxi-item>
+                                        <dxi-item formatName="clear"></dxi-item>
+                                        <dxi-item formatName="codeBlock"></dxi-item>
+                                        <dxi-item formatName="blockquote"></dxi-item>
+                                    </dxo-toolbar>
+                                </dx-html-editor>   
+    
+                                <div *ngIf="submitted && f.description.errors" class="text-danger">
+                                    <div *ngIf="f.description.errors.required">Isi Paket Wisata is required</div>
+                                </div>              
+                            </div>
+                        </div>
+                    </fieldset>
+    
+    
+                </div>
+    
+                <p class="uk-text-right">
+                    <!-- <button class="uk-button uk-button-default" type="reset" (click)="onReset()">Reset</button> -->
+                    <button class="uk-button uk-button-default uk-modal-close" (click)="onBatalTambahClick()">Batal</button>
+                    <button type="submit" class="uk-button uk-button-primary">Save</button>
+                </p>
+            </span>
+
+
+            <span class="toggleForm" hidden>
+                <h2 class="uk-modal-title">Upload Gambar</h2>
+
+                <div class="uk-form-controls mt-3">
+                    <input class="uk-input" type="File" (change)="handleFileInput($event.target.files)" placeholder="Masukan Gambar Latar Belakang..."   [ngClass]="{ 'uk-form-danger':  inputForm.value.imageUrl == null }">
+                    <div *ngIf="inputForm.value.imageUrl == null" class="uk-text-danger uk-text-italic">
+                        <div >gambar paket wisata wajib diisi</div>
+                    </div>
+                </div>
+        
+        
+                <img width="100%" *ngIf="inputForm.value.imageUrl != null" [src]="inputForm.value.imageUrl" class="image">
+        
+                <p class="uk-text-right mt-4">
+                    <button class="uk-button uk-button-default" (click)="btnCancelUpload()" uk-toggle="target: .toggleForm" type="button" id="btnHapus">Batal</button> &nbsp;
+                    <button class="uk-button uk-button-primary" uk-toggle="target: .toggleForm" type="button">Simpan</button>
+                </p>
+            </span>
+
+        </form>
+        
+        
+    </div>
+</div>
+
+<style>
+    .smallText{
+        white-space: nowrap; 
+        /* width: 100%;  */
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
+
+    
+    .p-datatable .p-datatable-tbody > tr > td{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+</style>
+
+<p class="uk-text-right mt-4">
+    <button class="uk-button uk-button-primary" (click)="onTambahClick()" uk-toggle="target: #modal-form" type="button">Tambah</button>
+</p>
+
+<p-table [value]="dataGridList">
+    <ng-template pTemplate="header" >
+        <tr>
+            <th class="rounded-top-left" width="50">No.</th>
+            <th width="300">Paket Wisata</th>
+            <th>Harga</th>
+            <th>Durasi Waktu Wisata</th>
+            <th>User Creator</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th class="rounded-top-right" style="text-align: center;">Action</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr>
+            <td width="50">{{rowIndex + 1}}</td>
+            <td width="300"  class="smallText">{{rowData.title}}</td>
+            <td>IDR. {{rowData.price | number}}</td>
+            <td>{{rowData.time}}</td>
+            <td>{{rowData.userId}}</td>
+            <td>{{rowData.createdAt |  date:'medium' }}</td>
+            <td *ngIf="rowData.createdAt != rowData.updatedAt">{{rowData.updatedAt |  date:'medium'}}</td>
+            <td *ngIf="rowData.createdAt == rowData.updatedAt"> - </td>
+            <td style="text-align: center;">
+                <span uk-icon="trash" class="btnEfect hover-primary m-2" (click)="onDeleteRow(rowData)"></span>
+                <span uk-icon="pencil" class="btnEfect hover-primary m-2" uk-toggle="target: #modal-form" (click)="onEditRow(rowData)"></span>
+                <span uk-icon="info" class="btnEfect hover-primary m-2" (click)="onViewRow(rowData)"></span>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            total data : {{dataGridList ? dataGridList.length : 0 }}
+        </div>
+    </ng-template>
+    
+</p-table>
+
+<!-- modal-edit-image -->
+<div id="modal-edit-image" class="uk-flex-top" uk-modal>    
+    <div class="uk-modal-dialog uk-margin-auto-vertical uk-modal-body">
+        <h2 class="uk-modal-title">Upload Gambar</h2>
+
+        <div class="uk-form-controls mt-3">
+            <input class="uk-input" type="File" (change)="handleFileInput($event.target.files)" placeholder="Masukan Gambar Latar Belakang..."   [ngClass]="{ 'uk-form-danger':  inputForm.value.imageUrl == null }">
+            <div *ngIf="inputForm.value.imageUrl == null" class="uk-text-danger uk-text-italic">
+              <div >gambar paket wisata wajib diisi</div>
+            </div>
+        </div>
+
+
+        <img width="100%" *ngIf="inputForm.value.imageUrl != null" [src]="inputForm.value.imageUrl" class="image">
+
+        <p class="uk-text-right mt-4">
+            <button class="uk-button uk-button-default uk-modal-close" (click)="btnCancelUpload()" type="button" id="btnHapus">Batal</button> &nbsp;
+            <button class="uk-button uk-button-primary uk-modal-close" type="button">Simpan</button>
+        </p>
+    </div>
+</div>
+<!-- modal-edit-image -->
+
+
+
+
+
+<div id="previewPaketWisata" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">{{ inputForm.controls.title?.value }}</h2>
+        <div class="uk-cover-container uk-height-medium" *ngIf="inputForm.value.imageUrl != null">
+            <img data-src="{{inputForm.value.imageUrl}}" alt="" uk-cover>
+
+            <h1 class="uk-position-center" *ngIf="inputForm.value.title != ''">
+                <span style="border-left: 12px solid #0F7AE5; border-bottom: 15px solid transparent; color: white;">  &nbsp; {{ inputForm.controls.title?.value }} </span> 
+            </h1>
+        </div>
+
+        <div class="uk-width-expand">
+            <h3 class="uk-card-title uk-margin-remove-bottom">{{ inputForm.controls.tags?.value }}</h3>
+            <!-- <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">{{ inputForm.controls.title?.value | date:'medium' }}</time></p> -->
+        </div>
+
+        <div class="container-fluid">
+            <div [innerHTML]="inputForm.value.description | keepHtml"></div>
+        </div>
+    </div>
+</div>

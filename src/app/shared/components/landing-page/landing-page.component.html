@@ -5,19 +5,27 @@
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a href="#home" class="nav__link active-link">Home</a>
+                    <a (click)="navActive($event)" name="home" class="nav__link active-link">Home</a>
                 </li>
                 <li class="nav__item">
-                    <a href="#about" class="nav__link">About</a>
+                    <a (click)="navActive($event)" name="about" class="nav__link">About</a>
+                </li>
+
+                <li class="nav__item">
+                    <a (click)="navActive($event)" name="discover" class="nav__link">Discover</a>
+                </li>
+
+
+                <li class="nav__item">
+                    <a (click)="navActive($event)" name="blog" class="nav__link">Blogs</a>
+                </li>
+
+                
+                <li class="nav__item">
+                    <a (click)="navActive($event)" name="place" class="nav__link">Places</a>
                 </li>
                 <li class="nav__item">
-                    <a href="#discover" class="nav__link">Discover</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#place" class="nav__link">Places</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#place" class="nav__link" (click)="login()" >Login</a>
+                    <a class="nav__link" (click)="login()" >Login</a>
                 </li>
             </ul>
 
@@ -104,7 +112,7 @@
     
     
     <!--==================== DISCOVER ====================-->
-    <section class="discover" id="discover">
+    <section class="discover section" id="discover">
         <h2 class="section__title">Discover the most <br> attractive places</h2>
 
         
@@ -150,8 +158,16 @@
 
     </section>
 
+
+
+
+
+    
+
+
+
     <!--==================== EXPERIENCE ====================-->
-    <section class="experience section">
+    <section class="experience section" id="experience">
         <h2 class="section__title">With Our Experience <br> We Will Serve You</h2>
 
         <div class="experience__container container grid">
@@ -185,7 +201,7 @@
     </section>
 
     <!--==================== VIDEO ====================-->
-    <section class="video section">
+    <section class="video section" id="video">
         <h2 class="section__title">Video Tour</h2>
 
         <div class="video__container container">
@@ -323,7 +339,7 @@
     </section>
 
     <!--==================== SUBSCRIBE ====================-->
-    <section class="subscribe section">
+    <section class="subscribe section" id="subscribe">
         <div class="subscribe__bg">
             <div class="subscribe__container container">
                 <h2 class="section__title subscribe__title">Subscribe Our <br> Newsletter</h2>
@@ -343,7 +359,7 @@
     </section>
     
     <!--==================== SPONSORS ====================-->
-    <section class="sponsor section">
+    <section class="sponsor section" id="sponsor">
         <div class="sponsor__container container grid">
             <div class="sponsor__content">
                 <img src="assets/img/sponsors1.png" alt="" class="sponsor__img">
@@ -362,6 +378,11 @@
             </div>
         </div>
     </section>
+
+    <section class="blog section" id=blog>
+        <app-berita></app-berita>
+    </section>
+    
 </main>
 
 <!--==================== FOOTER ====================-->

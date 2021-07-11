@@ -70,6 +70,11 @@
   }
 }
 
+
+.hidden-element{
+    display: none;
+}
+
 /*========== Variables Dark theme ==========*/
 body.dark-theme {
   --first-color-second: hsl(var(--hue-color), 54%, 12%);
@@ -202,6 +207,10 @@ input {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.nav__link a {
+    text-decoration: none;
 }
 
 .nav__logo, .nav__toggle {
