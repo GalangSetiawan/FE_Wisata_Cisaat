@@ -1,36 +1,32 @@
 <section id="team" class="pb-5">
-    <div class="container">
-        <div class="row">
-            
-            <ng-container *ngFor="let data of dataGridList">
-                <div class="col-xs-12 col-sm-6 col-md-3" >
-                    <div class="image-flip" >
-                        <div class="mainflip flip-0">
-                            <div class="frontside">
-                                <div class="card">
-                                    <div class="card-body text-center">
-                                        <p class="custom-icon"> <i class="fa" [ngClass]="data.icon" aria-hidden="true"></i> </p>
-                                        <h4 class="card-title">{{data.namaFasilitas}}</h4>
-                                        <!-- <p class="card-text">{{data.deskripsi}}</p> -->
-                                    </div>
+    <div class="container grid">
+        <div class="uk-grid-large uk-child-width-expand@s uk-text-center uk-margin-medium-top" uk-grid>
+            <div  *ngFor="let data of dataGridList">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p class="custom-icon"> <i class="fa" [ngClass]="data.icon" aria-hidden="true"></i> </p>
+                                    <h5 class="card-title uk-margin-small-top">{{data.namaFasilitas}}</h5>
+                                    <!-- <p class="card-text">{{data.deskripsi}}</p> -->
                                 </div>
                             </div>
-                            <div class="backside" style="width: 100%;">
-                                <div class="card">
-                                    <div class="card-body text-center mt-4">
-                                        <h4 class="card-title">Sunlimetech</h4>
-                                        <p class="card-text">
-                                            {{data.deskripsi}}
-                                        </p>
-                                        
-                                    </div>
+                        </div>
+                        <div class="backside" style="width: 100%;">
+                            <div class="card">
+                                <div class="card-body text-center p-2">
+                                    <h4 class="card-title">{{data.namaFasilitas}}</h4>
+                                    <p class="card-text">
+                                        {{data.deskripsi}}
+                                    </p>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </ng-container>
-
+            </div>
         </div>
     </div>
 </section>
