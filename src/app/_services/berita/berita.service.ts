@@ -13,6 +13,7 @@ export class modelBerita {
   imageNews: FileList;
   userId   : string;
   news     : string;
+  slug     : string;
 } 
 
 
@@ -40,6 +41,7 @@ export class BeritaService {
     formData.append('tags',request.tags)
     formData.append('userId',request.userId)
     formData.append('news',request.news)
+    formData.append('slug',request.slug)
 
 
     return this.http.post(this.baseUrl,formData);
@@ -56,12 +58,22 @@ export class BeritaService {
     formData.append('tags',request.tags)
     formData.append('userId',request.userId)
     formData.append('news',request.news)
+    formData.append('slug',request.slug)
     return this.http.put(`${this.baseUrl}/${data.id}`, formData);
   }
 
 
   getAllBerita(){
     return this.http.get(this.baseUrl);
+  }
+
+
+  getBeritaBySlug(slug){
+    return this.http.get(this.baseUrl + '/slug/' + slug);
+  }
+
+  getTop5(){
+    return this.http.get(this.baseUrl + '/top-5/all');
   }
 
   deleteBerita(id){

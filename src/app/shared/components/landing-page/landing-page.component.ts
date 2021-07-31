@@ -4,8 +4,14 @@ declare var ScrollReveal:any
 import { Router } from '@angular/router';
 import * as $ from 'jquery'
 import { element } from 'protractor';
-// declare var $: any;
-
+import { takeUntil, take, find } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { WebPreferencesService } from 'src/app/_services/web-preferences/web-preferences.service'
+import { ContactService } from 'src/app/_services/contact/contact.service'
+import { FasilitasService } from 'src/app/_services/fasilitas/fasilitas.service'
+import { PaketWisataService } from 'src/app/_services/paket-wisata/paket-wisata.service'
 
 @Component({
   selector: 'app-landing-page',
@@ -13,21 +19,198 @@ import { element } from 'protractor';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
+  private ngUnsubscribe: Subject<boolean> = new Subject();
+  public contactList:any[] = [];
+  public fasilitasList:any[] = [];
+  public paketWisataList:any[] = [];
+  
+  public webInfo: FormGroup;
 
   constructor(
-    public router: Router,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private fasilitasService:FasilitasService,
+    private paketWisataService:PaketWisataService,
+    private domSanitizer:DomSanitizer,
+
+    private webPreferencesService : WebPreferencesService,
+    private contactService : ContactService,
 
   ) {
-    
+    this.webInfo =  this.formBuilder.group({
+      websiteName     : null,
+      mapLocation     : null,
+      address         : null,
+      websiteImage    : [null],
+      websiteImageName: [null],
+      imageUrl        : [null],
+      id              : [0]
+    })
   }
 
   ngOnInit(): void {
-    this.swiper()
+    // this.swiper();
+    this.getWebsiteInfo();
+    this.getContact();
+    this.getFasilitas();
+    this.getPaketWisata();
+  }
+
+  public getContact(){
+    this.contactService.getAllContact().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (r:any) =>{
+        console.log('success | getContact ==>',r)
+        this.contactList = r
+        },
+      error =>{
+        console.log('error | getContact ==>',error)
+      }
+    );
+  }
+
+  public convertToBase64(data) {
+    let TYPED_ARRAY = new Uint8Array(data);
+    // const STRING_CHAR = String.fromCharCode.apply(null, TYPED_ARRAY);
+    const STRING_CHAR = TYPED_ARRAY.reduce((data, byte)=> {
+      return data + String.fromCharCode(byte);
+      }, ''
+    )
+
+    let base64String = btoa(STRING_CHAR);
+    var result:any = this.domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + base64String);
+    return result.changingThisBreaksApplicationSecurity
+    
+  }
+
+  public compressImage(src: string, maxWidth: number, maxHeight: number) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        let scale: number, newWidth: number, newHeight: number;
+        if(img.width < maxWidth){
+          scale = maxWidth / img.width;
+        }else{
+          scale = maxHeight / img.height;
+        }
+        newWidth = img.width * scale;
+        newHeight = img.height * scale;
+        const elem = document.createElement('canvas');
+        elem.width = newWidth;
+        elem.height = newHeight;
+        const ctx = elem.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, newWidth, newHeight)
+        const data = ctx.canvas.toDataURL();
+        res(data);
+      }
+      img.onerror = error => rej(error);
+    })
+  }
+
+  public currencyFormat(num,digits){
+    const lookup = [
+      { value: 1, symbol: "" },
+      { value: 1e3, symbol: "Rb" },
+      { value: 1e6, symbol: "Jt" },
+      { value: 1e9, symbol: "M" },
+      { value: 1e12, symbol: "T" },
+    ];
+    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    var item = lookup.slice().reverse().find(function(item) {
+      return num >= item.value;
+    });
+    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+}
+
+  public getPaketWisata(){
+    this.paketWisataService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        console.log("success getAllPaketWisata ===>",result)
+        this.paketWisataList = result
+        
+        this.paketWisataList.forEach(data => {
+          data.imageUrl = [];
+          var base64 = this.convertToBase64(data.paketWisataImg.data)
+          this.compressImage(base64, 400, 600).then(compressed400x600 => {
+            data.imageUrl = compressed400x600
+            data.imageUrlAsli = base64
+          });
+
+
+          data.priceMask = this.currencyFormat(data.price,0)
+
+
+        })
+        this.swiper();
+        console.log("success paketWisataList ===>",this.paketWisataList)
+
+      },
+      (error: any) => {
+        console.log("error getAllPaketWisata ===>",error)
+      }
+    );
+  }
+
+
+  public getFasilitas(){
+    this.fasilitasService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        console.log("success getFasilitas ===>",result)
+        this.fasilitasList = result
+      },
+      (error: any) => {
+        console.log("error getFasilitas ===>",error)
+      }
+    );
+  }
+
+  
+  public generateMap(googleMapCode){
+    console.log('generate map ===>',googleMapCode);
+    $( "#myid" ).remove();
+    var e = $(googleMapCode);
+    $('#box').append(e);    
+    e.attr('id', 'myid');
+    $("#myid").removeAttr("width");
+    $("#myid").attr("height","350");
+    $("#myid").css("width","100%");
+    $("#myid").addClass("mt- mb-5");
+  }
+  
+  public downloadImage(){
+    this.webPreferencesService.getWebsiteImage().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (r) =>{
+        console.log('success | downloadImage ==>',r)
+        this.webInfo.patchValue({imageUrl : r})
+        },
+      error =>{
+        console.log('error | downloadImage ==>',error)
+      }
+    );
+  }
+
+  public getWebsiteInfo(){
+    this.webPreferencesService.getWebsiteInfo().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        console.log("success getWebsiteInfo ===>",result)
+        this.webInfo.patchValue({
+          websiteName : result.websiteName,
+          address : result.address,
+          mapLocation : result.mapLocation,
+          id : result.id,
+          imageUrl:null
+        })
+        this.generateMap(this.webInfo.value.mapLocation)
+        this.downloadImage();
+      },
+      (error: any) => {
+        console.log("error getWebsiteInfo ===>",error)
+      }
+    );
   }
 
   public login(){
     this.router.navigate(['/login']);
-
   }
   public videoButton(){
     console.log('videbutton click')
@@ -138,19 +321,19 @@ export class LandingPageComponent implements OnInit {
     
 
 
-    if(selectedId == 'blog'){
-      elements.forEach(sectionId => {
-        var menu = document.getElementById(sectionId)
-        if(sectionId == 'blog') menu.classList.remove('hidden-element');
-        else  menu.classList.add('hidden-element');
-      });
-    }else{
-      elements.forEach(sectionId => {
-        var menu = document.getElementById(sectionId)
-        if(sectionId == 'blog') menu.classList.add('hidden-element');
-        else menu.classList.remove('hidden-element');
-      });    
-    }
+    // if(selectedId == 'blog'){
+    //   elements.forEach(sectionId => {
+    //     var menu = document.getElementById(sectionId)
+    //     if(sectionId == 'blog') menu.classList.remove('hidden-element');
+    //     else  menu.classList.add('hidden-element');
+    //   });
+    // }else{
+    //   elements.forEach(sectionId => {
+    //     var menu = document.getElementById(sectionId)
+    //     if(sectionId == 'blog') menu.classList.add('hidden-element');
+    //     else menu.classList.remove('hidden-element');
+    //   });    
+    // }
 
 
     

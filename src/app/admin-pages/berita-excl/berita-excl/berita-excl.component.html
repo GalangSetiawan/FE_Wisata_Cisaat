@@ -5,8 +5,6 @@
 </div>
 
 
-berita excl
-
 <div id="modal-form" class="uk-modal-container" uk-modal uk-modal="bg-close:false; esc-close:false">
     <div class="uk-modal-dialog uk-modal-body">
         <!-- <h2 class="uk-modal-title">{{ beritaForm?.controls?.title?.value }}</h2>
@@ -88,7 +86,22 @@ berita excl
                 
                         <div class="uk-margin">
                             <div class="uk-form-controls">
-                                <dx-html-editor formControlName="news" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.news.errors }">
+
+                                <p-editor formControlName="news" [style]="{'height':'320px'}">
+                                    <ng-template pTemplate="header">
+                                        <span class="ql-format-group">
+                                            <span title="Bold" class="ql-format-button ql-bold"></span>
+                                            <span class="ql-format-separator"></span>
+                                            <span title="Italic" class="ql-format-button ql-italic"></span>
+                                            <span class="ql-format-separator"></span>
+                                            <span title="Underline" class="ql-format-button ql-underline"></span>
+                                            <span class="ql-format-separator"></span>
+                                            <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+                                        </span>
+                                    </ng-template>
+                                </p-editor>
+                                
+                                <!-- <dx-html-editor formControlName="news" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.news.errors }">
                                     <dxo-toolbar>
                                         <dxi-item formatName="undo"></dxi-item>
                                             <dxi-item formatName="redo"></dxi-item>
@@ -121,7 +134,7 @@ berita excl
                                             <dxi-item formatName="codeBlock"></dxi-item>
                                             <dxi-item formatName="blockquote"></dxi-item>
                                     </dxo-toolbar>
-                                </dx-html-editor>   
+                                </dx-html-editor>    -->
     
                                 <div *ngIf="submitted && f.news.errors" class="text-danger">
                                     <div *ngIf="f.news.errors.required">Isi Berita is required</div>

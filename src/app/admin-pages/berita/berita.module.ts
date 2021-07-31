@@ -11,6 +11,7 @@ import { BeritaComponent } from './berita/berita.component';
 import { DxHtmlEditorModule, DxCheckBoxModule } from 'devextreme-angular';
 //dev extreme module
 import { TableModule } from 'primeng/table';
+import { EditorModule } from 'primeng/editor';
 
 
 @NgModule({
@@ -28,10 +29,11 @@ import { TableModule } from 'primeng/table';
     DxHtmlEditorModule,
     DxCheckBoxModule,
     PipesModule,
-
+    
+    //prime-ng module
     TableModule,
-    //dev extreme module
-
+    EditorModule
+    
 
   ],
   exports: [

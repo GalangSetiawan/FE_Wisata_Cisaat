@@ -168,7 +168,7 @@
                                         <dxi-item formatName="redo"></dxi-item>
                                         <dxi-item formatName="separator"></dxi-item>
                                         <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
-                                        <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
+                                        <!-- <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item> -->
                                         <dxi-item formatName="separator"></dxi-item>
                                         <dxi-item formatName="bold"></dxi-item>
                                         <dxi-item formatName="italic"></dxi-item>
@@ -194,8 +194,25 @@
                                         <dxi-item formatName="clear"></dxi-item>
                                         <dxi-item formatName="codeBlock"></dxi-item>
                                         <dxi-item formatName="blockquote"></dxi-item>
+                                        <dxi-item widget="dxButton" [options]="toolbarButtonOptions"></dxi-item>
                                     </dxo-toolbar>
                                 </dx-html-editor>   
+                                <dx-popup [showTitle]="true" title="Markup" [(visible)]="popupVisible">
+                                    <div>{{inputForm.value.description}}</div>
+                                </dx-popup>
+                                <!-- <p-editor formControlName="news" [style]="{'height':'320px'}">
+                                    <ng-template pTemplate="header">
+                                        <span class="ql-format-group">
+                                            <span title="Bold" class="ql-format-button ql-bold"></span>
+                                            <span class="ql-format-separator"></span>
+                                            <span title="Italic" class="ql-format-button ql-italic"></span>
+                                            <span class="ql-format-separator"></span>
+                                            <span title="Underline" class="ql-format-button ql-underline"></span>
+                                            <span class="ql-format-separator"></span>
+                                            <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+                                        </span>
+                                    </ng-template>
+                                </p-editor> -->
     
                                 <div *ngIf="submitted && f.description.errors" class="text-danger">
                                     <div *ngIf="f.description.errors.required">Isi Paket Wisata is required</div>

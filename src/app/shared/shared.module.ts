@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { PipesModule } from 'src/app/_helpers/html-pipe/html-pipe.module'
 
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { RouterModule } from '@angular/router';
@@ -10,6 +11,8 @@ import { ShellComponent } from './components/shell/shell.component';
 import { LoginComponent } from './components/login/login.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { BeritaComponent } from './components/berita/berita.component';
+import { NavbarUserComponent } from './components/navbar-user/navbar-user.component';
+import { StoriesComponent } from './components/stories/stories.component';
 
 const materialModules = [
   FlexLayoutModule
@@ -20,6 +23,7 @@ const materialModules = [
     CommonModule, 
     RouterModule, 
     FormsModule,
+    PipesModule,
     ...materialModules],
 
   declarations: [
@@ -28,11 +32,14 @@ const materialModules = [
     ShellComponent, 
     LoginComponent, 
     LandingPageComponent,
-    BeritaComponent
+    BeritaComponent,
+    NavbarUserComponent,
+    StoriesComponent
   ],
 
   exports: [
     SidenavComponent, 
+    PipesModule,
     ...materialModules
   ]
 })

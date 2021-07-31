@@ -70,6 +70,11 @@
   }
 }
 
+
+.hidden-element{
+    display: none;
+}
+
 /*========== Variables Dark theme ==========*/
 body.dark-theme {
   --first-color-second: hsl(var(--hue-color), 54%, 12%);
@@ -202,6 +207,10 @@ input {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.nav__link a {
+    text-decoration: none;
 }
 
 .nav__logo, .nav__toggle {
@@ -450,14 +459,26 @@ input {
 /*=============== DISCOVER ===============*/
 .discover__card {
   position: relative;
-  width: 200px;
+  width: 270px !important;
   overflow: var(--img-hidden);
 }
 
-.discover__data {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1rem;
+
+.show-on-hover{
+  display: none;
+}
+
+.discover__card:hover  .show-on-hover {
+  display: block;
+  background-color: rgba(0, 0,0, 0.5);
+  padding-top: 15px;
+  width: 100%;
+  height: 100%;
+}
+
+
+.discover__card:hover .hide-on-hover {
+  display: none;
 }
 
 .discover__title, 
@@ -487,6 +508,7 @@ input {
 .swiper-container-3d .swiper-slide-shadow-right {
   background-image: none;
 }
+
 
 /*=============== EXPERIENCE ===============*/
 .experience__container {
@@ -1042,3 +1064,159 @@ input {
     height: 640px;
   }
 }
+
+
+/* =====================================FASILITAS CSS========================================== */
+.smallText{
+  white-space: nowrap; 
+  /* width: 100%;  */
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+
+.custom-icon i.fa {
+  display: inline-block;
+  width: 150px;
+  background: #14505c;
+  color: white;
+  height: 150px;
+  padding: 80px;
+  font-size: 5em !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #108d6f;
+  border-color: #108d6f;
+  box-shadow: none;
+  outline: none;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #14505C;
+  border-color: #14505C;
+}
+
+section {
+  padding: 60px 0;
+}
+
+section .section-title {
+  text-align: center;
+  color: #14505C;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+#fasilitas .card {
+  border: none !important;
+  background: transparent !important;
+}
+
+.image-flip:hover .backside,
+.image-flip.hover .backside {
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -o-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  transform: rotateY(0deg);
+  border-radius: .25rem;
+}
+
+.image-flip:hover .frontside,
+.image-flip.hover .frontside {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.mainflip {
+  -webkit-transition: 1s;
+  -webkit-transform-style: preserve-3d;
+  -ms-transition: 1s;
+  -moz-transition: 1s;
+  -moz-transform: perspective(1000px);
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transition: 1s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.frontside {
+  position: relative;
+  -webkit-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  z-index: 2;
+  margin-bottom: 30px;
+}
+
+.backside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  -o-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+  -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+  -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+  box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+}
+
+.frontside,
+.backside {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: 1s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transition: 1s;
+  -moz-transform-style: preserve-3d;
+  -o-transition: 1s;
+  -o-transform-style: preserve-3d;
+  -ms-transition: 1s;
+  -ms-transform-style: preserve-3d;
+  transition: 1s;
+  transform-style: preserve-3d;
+}
+
+.frontside .card,
+.backside .card {
+  min-height: 250px;
+}
+
+#fasilitas .card-text{
+  font-size: 14px !important;
+  padding: 10px !important;
+  color: #14505c;
+}
+
+
+#fasilitas .card-title{
+  color: var(--text-color) !important;
+}
+
+.backside .card a {
+  font-size: 18px;
+  color: #14505C !important;
+}
+
+.frontside .card .card-title,
+.backside .card .card-title {
+  color: #14505C !important;
+}
+
+.frontside .card .card-body img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+/* =====================================FASILITAS CSS========================================== */

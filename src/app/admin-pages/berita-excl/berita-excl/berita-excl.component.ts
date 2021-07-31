@@ -69,6 +69,7 @@ export class BeritaExclComponent implements OnInit {
     this.beritaForm =  this.formBuilder.group({
       title    : ['', Validators.required],
       likes    : [null],
+      slug    : [null],
       news     : ['', Validators.required],
       groups   : [null],
       userId   : [this.currentUser.id, Validators.required],
@@ -154,13 +155,16 @@ export class BeritaExclComponent implements OnInit {
         );
       }
     });
-
-
+  }
+  
+  public generateSlug(string){
+    return string .toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-')  
   }
 
   onSubmit() {
     this.submitted = true;
     this.beritaForm.patchValue({ userId:this.currentUser.id })
+    this.beritaForm.patchValue({ slug: this.generateSlug(this.beritaForm.value.title)})
     console.log('onSubmit ===>',this.beritaForm.invalid,this.beritaForm.value)
       if (this.beritaForm.invalid) {
           return;
@@ -224,6 +228,7 @@ export class BeritaExclComponent implements OnInit {
     this.beritaForm.patchValue({
       title : data.title,
       news  : data.news,
+      slug  : data.slug,
       id    : data.id,
       groups  : data.groups,
       userId: this.currentUser.id,

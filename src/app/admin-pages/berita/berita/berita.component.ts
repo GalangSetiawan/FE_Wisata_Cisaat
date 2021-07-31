@@ -54,6 +54,7 @@ export class BeritaComponent implements OnInit {
   public initForm(){
     this.beritaForm =  this.formBuilder.group({
       title    : ['', Validators.required],
+      slug    : [null],
       likes    : [null],
       news     : ['', Validators.required],
       tags     : [null],
@@ -84,7 +85,6 @@ export class BeritaComponent implements OnInit {
       imageUrl : this.oldImageData.value.imageUrl
     });
   }
-
 
   btnOpenModalUploadImage(){
     this.oldImageData = _.cloneDeep(this.beritaForm)
@@ -144,9 +144,14 @@ export class BeritaComponent implements OnInit {
 
   }
 
+  public generateSlug(string){
+    return string .toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-')  
+  }
+
   onSubmit() {
     this.submitted = true;
     this.beritaForm.patchValue({ userId:this.currentUser.id })
+    this.beritaForm.patchValue({ slug: this.generateSlug(this.beritaForm.value.title)})
     console.log('onSubmit ===>',this.beritaForm.invalid,this.beritaForm.value)
       if (this.beritaForm.invalid) {
           return;
@@ -205,11 +210,13 @@ export class BeritaComponent implements OnInit {
     UIkit.modal('#previewBerita').toggle(); 
 
   }
+  
 
   onEditRow(data){
     this.beritaForm.patchValue({
       title : data.title,
       news  : data.news,
+      slug  : data.slug,
       id    : data.id,
       tags  : data.tags,
       userId: this.currentUser.id,

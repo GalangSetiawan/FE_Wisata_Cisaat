@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { BeritaService } from 'src/app/_services/berita/berita.service'
+import { BeritaExclService } from 'src/app/_services/berita-excl/berita-excl.service'
 import { takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,11 +8,11 @@ import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 import * as _ from 'lodash'
 import * as $ from 'jquery'
 @Component({
-  selector: 'app-berita',
-  templateUrl: './berita.component.html',
-  styleUrls: ['./berita.component.css']
+  selector: 'app-stories',
+  templateUrl: './stories.component.html',
+  styleUrls: ['./stories.component.css']
 })
-export class BeritaComponent implements OnInit {
+export class StoriesComponent implements OnInit {
 
   public slug;
   public beritaTop5:any[] = [];
@@ -21,7 +21,7 @@ export class BeritaComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private beritaService:BeritaService,
+    private beritaExclService:BeritaExclService,
     private domSanitizer:DomSanitizer,
 
     private router: Router,
@@ -29,14 +29,13 @@ export class BeritaComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-
-    $('.nav__menu a[name=blogs]').addClass('active-link')
+    $('.nav__menu a[name=history]').addClass('active-link')
 
     const events =  this.router.events. pipe(filter(event=>event instanceof NavigationEnd));
     events.subscribe((e:NavigationEnd)=>{
       console.log('apanih ====>',e.urlAfterRedirects)
 
-      if(e.urlAfterRedirects == '/berita/all'){
+      if(e.urlAfterRedirects == '/story/all'){
         this.slug = 'all'
       }
     })
@@ -55,7 +54,7 @@ export class BeritaComponent implements OnInit {
 
 
   public getBeritaBySlug(slug){
-    this.beritaService.getBeritaBySlug(slug).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    this.beritaExclService.getBeritaBySlug(slug).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaBySlug ===>",result)
         this.berita = result;
@@ -84,7 +83,7 @@ export class BeritaComponent implements OnInit {
   }
 
   public getBeritaTop5(){
-    this.beritaService.getTop5().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    this.beritaExclService.getTop5().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaTop5 ===>",result)
         this.beritaTop5 = result;

@@ -7,10 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptorProviders } from './_helpers/auth.interceptor.service';
-// import { HTMLPipe } from 'src/app/_helpers/html-pipe/html-pipe.module'
 import { AuthGuard } from './_helpers/auth.guard';
 import { SharedModule } from './shared/shared.module';
-// import { CurrencyInputDirective } from 'src/app/_helpers/currency-directive/currency-input.directive';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -20,6 +18,7 @@ import { ShellComponent } from './shared/components/shell/shell.component';
 import { LandingPageComponent } from './shared/components/landing-page/landing-page.component';
 import { TimelinePerkembanganComponent } from './shared/components/timeline-perkembangan/timeline-perkembangan.component';
 import { BeritaComponent } from './shared/components/berita/berita.component';
+import { StoriesComponent } from './shared/components/stories/stories.component';
 
 
 
@@ -35,37 +34,17 @@ import { SejarahModule } from './admin-pages/sejarah/sejarah.module';
 import { FasilitasModule } from './admin-pages/fasilitas/fasilitas.module';
 import { PaketWisataModule } from 'src/app/admin-pages/paket-wisata/paket-wisata.module';
 
-// import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
-
-
-// import { BeritaComponent } from 'src/app/admin-pages/berita/berita/berita.component';
-// import { AdminComponent } from 'src/app/admin-pages/admin/admin/admin.component';
-// import { HomeComponent } from 'src/app/admin-pages/home/home/home.component';
-// import { WebPreferencesComponent } from 'src/app/admin-pages/web-preferences/web-preferences/web-preferences.component';
-
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: LandingPageComponent },
-  { path: 'berita', component: BeritaComponent },
+  { path: 'berita/:slug', component: BeritaComponent },
+  { path: 'story/:slug', component: StoriesComponent },
   { path: 'notauth', component: NotAuthComponent },
   { path: 'sejarah-timeline', component: TimelinePerkembanganComponent },
 
   
-  // {
-  //   path: 'hehe',
-  //   component: ShellComponent,
-  //   canActivate: [AuthGuard],
-  //   runGuardsAndResolvers: 'always',
-  //   children: [
-  //     { path: 'web-preferences', component: WebPreferencesComponent },
-  //     { path: 'home', component: HomeComponent },
-  //     { path: 'admin', component: AdminComponent },
-  //     { path: 'berita', component: BeritaComponent },
-  //     { path: '', redirectTo: 'home', pathMatch: 'full' }
-  //   ]
-  // },
   
 
   {
@@ -95,7 +74,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    // CurrencyInputDirective
   ],
   imports: [
     BrowserModule,

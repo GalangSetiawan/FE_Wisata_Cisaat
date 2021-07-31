@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import * as $ from 'jquery'
+import { Router, NavigationEnd, RouterEvent } from '@angular/router';
+import { takeUntil, filter } from 'rxjs/operators';
+import { menuConstant } from 'src/app/_helpers/menu-constant/custom-widget.constant'
+
 
 @Component({
   selector: 'app-sidenav',
@@ -6,64 +11,42 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
+  public openedMenu:any;
+  constructor(
+    public router: Router,
 
-  constructor() { }
+  ) {
+    const events =  this.router.events. pipe(filter(event=>event instanceof NavigationEnd));
+        events.subscribe((e:NavigationEnd)=>{
+        console.log('apanih ====>',e.urlAfterRedirects)         
+        menuConstant.listMenu.forEach(menu => {
+          if(menu.url.includes(e.urlAfterRedirects)){
+            console.log('opened menu ==>',menu);
+            this.openedMenu = menu
+          }
+        });
+      })
+
+   }
 
   ngOnInit(): void {
   }
 
+  isShowToggle = true
+  toggleSidebar(){
+    this.isShowToggle =! this.isShowToggle
+    if(this.isShowToggle) {
+      $('#sidebar').hide();
+      $('#main').attr('style','margin-left: 0');
+    } else {
+      $('#sidebar').show();
+      $('#main').attr('style','margin-left: 300px');
+    }
+  }
 
-  listMenu = [
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'thumbnails',
-      menuName : 'Dashboard',
-      url :'../admin/home'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'cog',
-      menuName : 'Admin',
-      url : '../admin/admin'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'file-edit',
-      menuName : 'Berita',
-      url : '../admin/berita'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'file-edit',
-      menuName : 'Berita Exclusive',
-      url : '../admin/berita-excl'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'check',
-      menuName : 'Website Preferences',
-      url : '../admin/web-preferences'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'check',
-      menuName : 'Sejarah Cisaat',
-      url : '../admin/sejarah'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'check',
-      menuName : 'Paket Wisata',
-      url : '../admin/paket-wisata'
-    },
-    {
-      fontAwesomeIcon : 'fa-home',
-      ukIcon : 'check',
-      menuName : 'Fasilitas',
-      url : '../admin/fasilitas'
-    },
+
+  listMenu = menuConstant.listMenu
     
-  ]
 
 
 }

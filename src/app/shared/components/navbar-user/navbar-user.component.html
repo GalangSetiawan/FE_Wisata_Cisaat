@@ -1,0 +1,54 @@
+<header class="header scroll-header2" id="header">
+    <nav class="nav container">
+        <a href="#" class="nav__logo">{{webInfo.value.websiteName}}</a>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a [routerLink]="['/home']" name="home" class="nav__link ">Home</a>
+                </li>
+                <li class="nav__item">
+                    <a [routerLink]="['/home']" name="about" class="nav__link">About</a>
+                </li>
+
+                <li class="nav__item">
+                    <a [routerLink]="['/home']" name="discover" class="nav__link">Discover</a>
+                </li>
+
+
+                <li class="nav__item">
+                    <a [routerLink]="['/berita', 'all']" name="blogs" (click)="navActive($event)" class="nav__link" >Blogs</a>
+                </li>
+
+                <li class="nav__item">
+                    <a [routerLink]="['/story', 'all']" name="history" (click)="navActive($event)" class="nav__link">History</a>
+                </li>
+                
+                <li class="nav__item">
+                    <a [routerLink]="['/home']" name="place" class="nav__link">Places</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" (click)="login()" >Login</a>
+                </li>
+            </ul>
+
+            <div class="nav__dark">
+                <!-- Theme change button -->
+                <span class="change-theme-name">Dark mode</span>
+                <i class="ri-moon-line change-theme" (click)="themeButton()" id="theme-button"></i>
+            </div>
+
+            <i class="ri-close-line nav__close" id="nav-close" (click)="toggleMenu()"></i>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle" style="margin-right: 30px;">
+            <i class="ri-function-line" (click)="toggleMenu()" ></i>
+        </div>
+    </nav>
+</header>
+ <!--========== SCROLL UP ==========-->
+ <a href="#navbar-header" class="scrollup" id="scroll-up" uk-scroll>
+    <i class="ri-arrow-up-line scrollup__icon"></i>
+</a>
+
+

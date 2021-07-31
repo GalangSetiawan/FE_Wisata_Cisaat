@@ -35,7 +35,7 @@
                         <div class="mt-5">
                             <dl class="uk-description-list uk-description-list-divider"  *ngIf="beritaTop5.length > 0" >
                                 <ng-container *ngFor="let data of beritaTop5">
-                                    <dt><a [routerLink]="['/berita', data.slug]" (click)="gotoSelectedBerita($event)" [attr.name]="data.slug"  >{{data.title}}</a></dt>
+                                    <dt><a [routerLink]="['/story', data.slug]" (click)="gotoSelectedBerita($event)" [attr.name]="data.slug"  >{{data.title}}</a></dt>
                                     <!-- <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd> -->
                                 </ng-container>
                             </dl>
@@ -71,7 +71,7 @@
                                     <img [src]="data.imageUrlAsli" alt="">
                                 </div>
                                 <div class="uk-card-body uk-article">
-                                    <h3 class="uk-card-title uk-margin-bottom"><a class="news-title" [routerLink]="['/berita', data.slug]" (click)="gotoSelectedBerita($event)" [attr.name]="data.slug">{{data.title}}</a></h3>
+                                    <h3 class="uk-card-title uk-margin-bottom"><a class="news-title" [routerLink]="['/story', data.slug]" (click)="gotoSelectedBerita($event)" [attr.name]="data.slug">{{data.title}}</a></h3>
                                     <p style="font-size: 12px;" class="uk-article-meta">Written by {{data.userId}} on {{data.createdAt | date:'medium' }}.</p>
 
                                     <div [innerHTML]="data?.news | keepHtml" class="box-showcase-news"></div>
@@ -97,7 +97,7 @@
 
                             <dl class="uk-description-list uk-description-list-divider"  *ngIf="beritaTop5.length > 0" >
                                 <ng-container *ngFor="let data of beritaTop5">
-                                    <dt><a [routerLink]="['/berita', data.slug]" (click)="gotoSelectedBerita($event)" [attr.name]="data.slug"  >{{data.title}}</a></dt>
+                                    <dt><a [routerLink]="['/story', data.slug]" (click)="gotoSelectedBerita($event)" [attr.name]="data.slug"  >{{data.title}}</a></dt>
                                     <!-- <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd> -->
                                 </ng-container>
                             </dl>

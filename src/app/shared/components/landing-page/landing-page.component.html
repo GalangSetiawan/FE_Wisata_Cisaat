@@ -1,6 +1,6 @@
 <header class="header" id="header">
     <nav class="nav container">
-        <a href="#" class="nav__logo">Desa Cisaat</a>
+        <a href="#" class="nav__logo">{{webInfo.value.websiteName}}</a>
 
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
@@ -17,7 +17,11 @@
 
 
                 <li class="nav__item">
-                    <a (click)="navActive($event)" name="blog" class="nav__link">Blogs</a>
+                    <a [routerLink]="['/berita', 'all']" name="blogs" class="nav__link">Blogs</a>
+                </li>
+
+                <li class="nav__item">
+                    <a [routerLink]="['/story', 'all']" name="history" class="nav__link active-link">History</a>
                 </li>
 
                 
@@ -46,14 +50,15 @@
 
 <main class="main">
     <!--==================== HOME ====================-->
-    <section class="home" id="home">
-        <img src="assets/img/img1.jpg" alt="" class="home__img">
+    <section class="home" id="home" style="padding:0px;">
+        <img src="assets/img/img1.jpg" alt="" class="home__img" *ngIf="webInfo.value.imageUrl == null">
+        <img [src]="webInfo.value.imageUrl" class="home__img" *ngIf="webInfo.value.imageUrl != null" >
 
         <div class="home__container container grid">
             <div class="home__data">
                 <span class="home__data-subtitle">Discover your place</span>
-                <h1 class="home__data-title">Explore The <br> Best <b>Beautiful <br> Beaches</b></h1>
-                <a href="#" class="button">Explore</a>
+                <h1 class="home__data-title">Explore Keindahan <br> Desa <b>Cisaat <br> Wisata Alam Pasundan</b></h1>
+                <a href="#discover" class="button">Tawaran Kami</a>
 
             </div>
 
@@ -88,10 +93,8 @@
     <section class="about section" id="about">
         <div class="about__container container grid">
             <div class="about__data">
-                <h2 class="section__title about__title">More Information <br> About The Best Beaches</h2>
-                <p class="about__description">You can find the most beautiful and pleasant places at the best 
-                    prices with special discounts, you choose the place we will guide you all the way to wait, get your 
-                    place now.
+                <h2 class="section__title about__title">Cari lebih dalam <br> Pesona Desa Wisata Cisaat</h2>
+                <p class="about__description">Desa Cisaat secara resmi di tertapkan sebagai Desa Wisata sejak tahun 2010 oleh kementrian Pariwisata serta mendapat Predikat Sebagai Desa Mandiri Gotong Royong (DMGR) oleh Pemerintah Kabupaten Subang pada tahun yang sama. 
                 </p>
                 <a href="#" class="button">Reserve a place</a>
             </div>
@@ -112,13 +115,13 @@
     
     
     <!--==================== DISCOVER ====================-->
-    <section class="discover section" id="discover">
+    <!-- <section class="discover section" id="discover">
         <h2 class="section__title">Discover the most <br> attractive places</h2>
 
         
         <div class="discover__container container swiper-container">
             <div class="swiper-wrapper">
-                <!--==================== DISCOVER 1 ====================-->
+                
                 <div class="discover__card swiper-slide">
                     <img src="assets/img/discover1.jpg" alt="" class="discover__img">
                     <div class="discover__data">
@@ -127,7 +130,7 @@
                     </div>
                 </div>
 
-                <!--==================== DISCOVER 2 ====================-->
+                
                 <div class="discover__card swiper-slide">
                     <img src="assets/img/discover2.jpg" alt="" class="discover__img">
                     <div class="discover__data">
@@ -136,7 +139,7 @@
                     </div>
                 </div>
 
-                <!--==================== DISCOVER 3 ====================-->
+                
                 <div class="discover__card swiper-slide">
                     <img src="assets/img/discover3.jpg" alt="" class="discover__img">
                     <div class="discover__data">
@@ -145,7 +148,7 @@
                     </div>
                 </div>
 
-                <!--==================== DISCOVER 4 ====================-->
+                
                 <div class="discover__card swiper-slide">
                     <img src="assets/img/discover4.jpg" alt="" class="discover__img">
                     <div class="discover__data">
@@ -156,10 +159,90 @@
             </div>
         </div>
 
+    </section> -->
+
+
+
+
+    <!-- ========================= Tawaran Kami ============================ -->
+    <section class="discover section" id="discover">
+        <h2 class="section__title">Tawaran Kami</h2>    
+    
+        <div class="uk-slider-container-offset discover" uk-slider style="max-width: 820px; margin-left: auto; margin-right: auto;">
+    
+            <div class="uk-position-relative uk-visible-toggle uk-light swiper-container" tabindex="-1">
+        
+                <ul class="uk-slider-items uk-child-width-1-3@s uk-grid swiper-wrapper">
+    
+                    <li *ngFor="let data of paketWisataList">
+                        <div class="discover__card swiper-slide uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img [src]="data.imageUrl" alt="" class="discover__img" style="height: 400px; width:100%; object-fit:cover;">
+                            </div>
+                            <div class="uk-overlay uk-position-top hide-on-hover">
+                                <div class="discover__price p-2">
+                                    <h2 class="discover__title">IDR. {{ data.priceMask }}</h2>
+                                </div>
+                            </div>
+                            <div class="uk-overlay uk-position-center show-on-hover" style="color: white;">
+                                <div class="discover__data">
+                                    <h2 class="discover__title">{{data.title}}</h2>
+                                    <span class="discover__description">{{data.time}}</span>
+                                </div>
+                                <div [innerHTML]="data.description | keepHtml" style="zoom: 0.8;"></div>
+                            </div>
+                            <div class="uk-overlay uk-position-bottom hide-on-hover">
+                                <div class="discover__data">
+                                    <h2 class="discover__title">{{data.title}}</h2>
+                                    <span class="discover__description">{{data.time}}</span>
+                                </div>
+                            </div>
+    
+                            <button class="button button--flex place__button hide-on-hover">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+    
+                        </div>
+                    </li>
+    
+    
+                    <li style="display: none;">
+                        <div class="discover__card swiper-slide uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img src="https://getuikit.com/docs/images/photo.jpg" alt="" class="discover__img" style="height: 400px; width:100%; object-fit:cover;">
+                            </div>
+                            <div class="uk-overlay uk-overlay-default uk-position-top">
+                                <span class="uk-badge">IDR : 200k</span>
+                            </div>
+                            <div class="uk-overlay uk-overlay-default uk-position-center">
+                                <p>Center</p>
+                            </div>
+                            <div class="uk-overlay uk-position-bottom">
+                                <div class="discover__data">
+                                    <h2 class="discover__title">Hawaii</h2>
+                                    <span class="discover__description">15 tours available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+    
+                </ul>
+        
+                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+        
+            </div>
+        
+        </div>
+
+
+        <div class="video__container container mt-5">
+            <p class="video__description">Geser untuk melihat penawaran lain nya.
+            </p>
+        </div>
+    
     </section>
-
-
-
+    <!-- ========================= Tawaran Kami ============================ -->
 
 
     
@@ -220,6 +303,56 @@
             </div>
         </div>
     </section>
+
+
+
+
+    <section class="fasilitas section" id="fasilitas">
+        <h2 class="section__title">Fasilitas</h2>
+        <div class="container grid">
+
+            <div class="uk-grid-large uk-child-width-expand@s uk-text-center uk-margin-medium-top" uk-grid>
+
+                <div  *ngFor="let data of fasilitasList">
+                    <!-- <div class="uk-card uk-card-default uk-card-body"> -->
+                        <div class="image-flip" >
+                            <div class="mainflip flip-0">
+                                <div class="frontside">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <p class="custom-icon"> <i class="fa" [ngClass]="data.icon" aria-hidden="true"></i> </p>
+                                            <h5 class="card-title uk-margin-small-top">{{data.namaFasilitas}}</h5>
+                                            <!-- <p class="card-text">{{data.deskripsi}}</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="backside" style="width: 100%;">
+                                    <div class="card">
+                                        <div class="card-body text-center p-2">
+                                            <h4 class="card-title">{{data.namaFasilitas}}</h4>
+                                            <p class="card-text">
+                                                {{data.deskripsi}}
+                                            </p>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                </div>
+                
+            </div>
+
+            
+        </div>
+    </section>
+
+
+    <!-- dummy -->
+
+    <section class="history section" id="history"></section>
+    <section class="blogs section" id="blogs"></section>
 
     <!--==================== PLACES ====================-->
     <section class="place section" id="place">
@@ -379,10 +512,13 @@
         </div>
     </section>
 
-    <section class="blog section" id=blog>
-        <app-berita></app-berita>
+    <!--==================== MAP ====================-->
+    <section class="map section" id="map">
+        <div id="box" class="container grid">
+        </div>
     </section>
-    
+    <!--==================== MAP ====================-->
+
 </main>
 
 <!--==================== FOOTER ====================-->

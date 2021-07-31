@@ -61,14 +61,14 @@ export class FasilitasComponent implements OnInit {
     })
   }
 
-  getAllFasilitas(){
+  public getAllFasilitas(){
     this.fasilitasService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
-        console.log("success getAll ===>",result)
+        console.log("success getAllFasilitas ===>",result)
         this.dataGridList = result
       },
       (error: any) => {
-        console.log("error getAll ===>",error)
+        console.log("error getAllFasilitas ===>",error)
       }
     );
   }

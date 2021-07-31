@@ -94,7 +94,7 @@
                                 <div class="uk-margin">
                                     <div class="uk-form-label">Alamat</div>
                                     <div class="uk-form-controls">
-                                        <dx-html-editor formControlName="address" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.address.errors }">
+                                        <!-- <dx-html-editor formControlName="address" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.address.errors }">
                                             <dxo-toolbar>
                                                 <dxi-item formatName="undo"></dxi-item>
                                                 <dxi-item formatName="redo"></dxi-item>
@@ -112,7 +112,21 @@
                                                 <dxi-item formatName="alignJustify"></dxi-item>
                                                 <dxi-item formatName="separator"></dxi-item>
                                             </dxo-toolbar>
-                                        </dx-html-editor>   
+                                        </dx-html-editor>    -->
+
+                                        <p-editor formControlName="address" [style]="{'height':'320px'}">
+                                            <ng-template pTemplate="header">
+                                                <span class="ql-format-group">
+                                                    <span title="Bold" class="ql-format-button ql-bold"></span>
+                                                    <span class="ql-format-separator"></span>
+                                                    <span title="Italic" class="ql-format-button ql-italic"></span>
+                                                    <span class="ql-format-separator"></span>
+                                                    <span title="Underline" class="ql-format-button ql-underline"></span>
+                                                    <span class="ql-format-separator"></span>
+                                                    <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+                                                </span>
+                                            </ng-template>
+                                        </p-editor>
         
                                         <div *ngIf="submitted && f.address.errors" class="text-danger">
                                             <div *ngIf="f.address.errors.required">Isi Berita is required</div>

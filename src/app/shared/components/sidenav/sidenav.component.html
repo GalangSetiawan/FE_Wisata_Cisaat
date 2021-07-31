@@ -1,48 +1,31 @@
+<div class="sidebar-wrapper active">
+  <div class="sidebar-header">
+    <div style="text-align:center">
+      <div class="logo">
+        <a><img src="assets/img/spotify.png" style="width:100%; height: auto;"  alt="Logo" srcset=""></a>
+      </div>
+      <div class="toggler">
+        <a (click)="toggleSidebar()" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-menu">
+    <ul class="menu">
+      <li class="sidebar-title">Menu</li>
 
-<div class="uk-inline uk-margin d-flex justify-content-center ">
-  <img src="assets/img/Logo-LBG--01.png" style="width: 70%;" >
-</div>
-
-<div class="" id="sidebar">
-    <ul class="uk-nav uk-nav-default">
-
-
-      <li *ngFor="let menu of listMenu" routerLink="{{menu.url}}">
-        <span class="uk-margin-medium-right" uk-icon="menu.ukIcon"></span>
-        <!-- <i class="fa" [className]="menu.fontAwesomeIcon" aria-hidden="true"></i> -->
-
-        {{ menu.menuName }}
+      <li class="sidebar-item" [attr.name]="menu.urlPrefix" [ngClass]="openedMenu.urlPrefix === menu.urlPrefix ? 'active' : ''" *ngFor="let menu of listMenu" routerLink="{{menu.url}}">
+        <a  class='sidebar-link'>
+          <i class="fa {{menu.fontAwesomeIcon}}" style="font-size: 20px;"></i>
+          <span>{{ menu.menuName }}</span>
+        </a>
       </li>
 
-      <!-- <li class="" routerLink="../admin/home" >
-        <span class="uk-margin-medium-right" uk-icon="thumbnails"></span>
-        Home
-      </li>
+    
 
       
-      <li class="" routerLink="../admin/admin" >
-        <span class="uk-margin-medium-right" uk-icon="check"></span>
-        Admin
-      </li>
-
-      <li class="" routerLink="../admin/berita" >
-        <span class="uk-margin-medium-right" uk-icon="file-edit"></span>
-        Berita
-      </li>
-
-      <li class="" routerLink="../admin/web-preferences" >
-        <span class="uk-margin-medium-right" uk-icon="file-edit"></span>
-        Website Preferences
-      </li>
-
-      <li class="" routerLink="../admin/contact" >
-        <span class="uk-margin-medium-right" uk-icon="check"></span>
-        Contact
-      </li> -->
-       
     </ul>
+  </div>
+  <button class="sidebar-toggler btn x" ><i data-feather="x"></i></button>
 </div>
-  
-  
-  
-  
+
+

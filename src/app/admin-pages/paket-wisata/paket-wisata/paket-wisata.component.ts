@@ -28,6 +28,13 @@ export class PaketWisataComponent implements OnInit {
   public currentUser;
   public submitted = false;
   public oldImageData:any
+  public popupVisible: boolean;
+
+  public toolbarButtonOptions :any = {
+      text: 'Show markup',
+      stylingMode: 'text',
+      onClick: () => this.popupVisible = true
+  };
 
   constructor(
     private paketWisataService:PaketWisataService,
@@ -61,16 +68,16 @@ export class PaketWisataComponent implements OnInit {
 
   public initForm(){
     this.inputForm =  this.formBuilder.group({
-      id       : [null],
-      title    : ['', Validators.required],
-      description :['', Validators.required],
-      time     : ['', Validators.required],
-      price     : ['', Validators.required],
-      priceMask :null,
-      userId   : [this.currentUser.id, Validators.required],
-      paketWisataImg: [null],
+      id                : [null],
+      title             : ['', Validators.required],
+      description       : ['', Validators.required],
+      time              : ['', Validators.required],
+      price             : ['', Validators.required],
+      priceMask         : null,
+      userId            : [this.currentUser.id, Validators.required],
+      paketWisataImg    : [null],
       paketWisataImgName: [null],
-      imageUrl : [null],
+      imageUrl          : [null],
     })
   }
 

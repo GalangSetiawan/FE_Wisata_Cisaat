@@ -10,7 +10,7 @@ import { CurrencyInputDirective } from 'src/app/_helpers/currency-directive/curr
 
 
 //dev extreme module
-import { DxHtmlEditorModule, DxCheckBoxModule, DxButtonGroupModule } from 'devextreme-angular';
+import { DxHtmlEditorModule, DxCheckBoxModule, DxButtonGroupModule, DxPopupModule } from 'devextreme-angular';
 
 
 //primeng
@@ -25,6 +25,7 @@ import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
+import { EditorModule } from 'primeng/editor';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import {InputTextModule} from 'primeng/inputtext';
     DxHtmlEditorModule,
     DxCheckBoxModule,
     DxButtonGroupModule,
+    DxPopupModule,
 
     // primeng
     TableModule,
@@ -50,7 +52,7 @@ import {InputTextModule} from 'primeng/inputtext';
 		ButtonModule,
 		ToastModule,
     InputTextModule,
-    
+    EditorModule,
     
     
   ],

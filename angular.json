@@ -25,8 +25,13 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/css/app.css",
+              "src/assets/css/bootstrap-icons.css",
+              "src/assets/css/perfect-scrollbar.css",
               "src/assets/css/styles.css",
               "src/assets/css/swiper-bundle.min.css",
+              "node_modules/quill/dist/quill.core.css", 
+              "node_modules/quill/dist/quill.snow.css",
               "node_modules/devextreme/dist/css/dx.common.css",
               "node_modules/devextreme/dist/css/dx.light.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
@@ -37,8 +42,11 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "src/assets/js/main.js",
+              "src/assets/js/main2.js",
+              "src/assets/js/perfect-scrollbar.min.js",
               "src/assets/js/scrollreveal.min.js",
-              "src/assets/js/swiper-bundle.min.js"
+              "src/assets/js/swiper-bundle.min.js",
+              "node_modules/quill/dist/quill.js"
             ]
           },
           "configurations": {
