@@ -21,9 +21,9 @@ export class menuConstant {
     },
     {
       fontAwesomeIcon : 'fa-file-text-o',
-      menuName : 'Berita Exclusive',
-      url : '../admin/berita-excl',
-      urlPrefix: 'berita-excl',
+      menuName : 'Post Exclusive',
+      url : '../admin/post-excl',
+      urlPrefix: 'post-excl',
     },
     {
       fontAwesomeIcon : 'fa-cogs',

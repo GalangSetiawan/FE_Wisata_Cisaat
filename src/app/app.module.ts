@@ -63,7 +63,7 @@ const routes: Routes = [
       { path: 'admin/admin', loadChildren: './admin-pages/admin/admin.module#AdminModule'},
       { path: 'admin/berita', loadChildren: './admin-pages/berita/berita.module#BeritaModule'},
       { path: 'admin/fasilitas', loadChildren: './admin-pages/fasilitas/fasilitas.module#FasilitasModule'},
-      { path: 'admin/berita-excl', loadChildren: './admin-pages/berita-excl/berita-excl.module#BeritaExclModule'},
+      { path: 'admin/post-excl', loadChildren: './admin-pages/berita-excl/berita-excl.module#BeritaExclModule'},
       { path: '', redirectTo: 'admin/home', pathMatch: 'full' }
     ]
   },

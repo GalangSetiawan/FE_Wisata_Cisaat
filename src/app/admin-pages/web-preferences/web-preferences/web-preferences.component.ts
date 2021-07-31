@@ -24,7 +24,7 @@ export class WebPreferencesComponent implements OnInit {
   public oldImageData:any
   public viewMode = 'general'
   public contactList:any[] = [];
-
+  public modeEdit = false;
   constructor(
     private formBuilder: FormBuilder,
     private tokenStorage: TokenStorageService,
@@ -56,7 +56,10 @@ export class WebPreferencesComponent implements OnInit {
 
   public onMapChange(data){
     console.log('onMapChange ===>',data);
+  }
 
+  public toggleMode(value){
+    this.modeEdit = value;
   }
 
   public getAllContact(){
@@ -137,6 +140,7 @@ export class WebPreferencesComponent implements OnInit {
           (result:any) => {
             console.log("success updateBerita ===>",result)
             Swal.fire( 'Yay Success!', 'Berhasil menyimpan data', 'success' )
+            this.toggleMode(false);
           },
           (error: any) => {
             console.log("error updateBerita ===>",error)

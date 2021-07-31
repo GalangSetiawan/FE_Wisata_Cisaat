@@ -15,7 +15,7 @@
 
             <h1 style="position: absolute; color: white;"> {{f.websiteName.value}} </h1>
             
-            <a class="uk-position-absolute uk-transform-center" (click)="btnOpenModalUploadImage()" href="#modal-edit-image" uk-toggle style="
+            <a class="uk-position-absolute uk-transform-center" (click)="btnOpenModalUploadImage()" *ngIf="modeEdit" href="#modal-edit-image" uk-toggle style="
             right: 15%; 
             top: 15%; 
             background: #8CAF00; 
@@ -148,7 +148,11 @@
         
                                 
                                 <p class="uk-text-right">
-                                    <button type="submit" class="uk-button uk-button-primary">Simpan</button>
+                                    <button class="uk-button uk-button-primary" (click)="toggleMode(true)" *ngIf="!modeEdit ;else saveButton">Edit</button>
+                                    <ng-template #saveButton>
+                                        <button type="submit" class="uk-button uk-button-primary">Simpan</button>
+                                    </ng-template>
+                                    
                                 </p>
         
         

@@ -3,7 +3,7 @@
 
 
 
-    <div class="uk-slider-container-offset discover" uk-slider style="max-width: 820px; height: 600px; margin-left: auto; margin-right: auto;">
+    <div class="uk-slider-container-offset discover" uk-slider style="max-width: 820px; height: auto; margin-left: auto; margin-right: auto;">
 
         <div class="uk-position-relative uk-visible-toggle uk-light swiper-container" tabindex="-1">
     
@@ -14,15 +14,21 @@
                         <div class="uk-card-media-top">
                             <img [src]="data.imageUrl" alt="" class="discover__img" style="height: 400px; width:100%; object-fit:cover;">
                         </div>
-                        <div class="uk-overlay  uk-position-top">
-                            <div class="discover__data ">
+                        <div class="uk-overlay uk-position-top hide-on-hover">
+                            <div class="discover__price p-2">
                                 <h2 class="discover__title">IDR. {{ data.priceMask }}</h2>
                             </div>
                         </div>
-                        <div class="uk-overlay uk-position-center description" style="color: white;">
+
+                        <div class="uk-overlay uk-position-bottom show-on-hover" style="color: white;">
+                            <div class="discover__data mb-3">
+                                <h2 class="discover__title">{{data.title}}</h2>
+                                <span class="discover__description">{{data.time}} | IDR. {{ data.priceMask }}</span>
+                            </div>
                             <div [innerHTML]="data.description | keepHtml" style="zoom: 0.8;"></div>
                         </div>
-                        <div class="uk-overlay uk-position-bottom">
+                        
+                        <div class="uk-overlay uk-position-bottom hide-on-hover">
                             <div class="discover__data">
                                 <h2 class="discover__title">{{data.title}}</h2>
                                 <span class="discover__description">{{data.time}}</span>
@@ -80,7 +86,7 @@
 </div>
 
 
-<div id="modal-form" class="uk-modal-container" uk-modal uk-modal="bg-close:false; esc-close:false">
+<div id="modal-form-paketwisata" class="uk-modal-container" uk-modal uk-modal="bg-close:false; esc-close:false">
     <div class="uk-modal-dialog uk-modal-body">
         <!-- <h2 class="uk-modal-title">{{ inputForm?.controls?.title?.value }}</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
@@ -273,7 +279,7 @@
 </style>
 
 <p class="uk-text-right mt-4">
-    <button class="uk-button uk-button-primary" (click)="onTambahClick()" uk-toggle="target: #modal-form" type="button">Tambah</button>
+    <button class="uk-button uk-button-primary" (click)="onTambahClick()" uk-toggle="target: #modal-form-paketwisata" type="button">Tambah</button>
 </p>
 
 <p-table [value]="dataGridList">
@@ -301,7 +307,7 @@
             <td *ngIf="rowData.createdAt == rowData.updatedAt"> - </td>
             <td style="text-align: center;">
                 <span uk-icon="trash" class="btnEfect hover-primary m-2" (click)="onDeleteRow(rowData)"></span>
-                <span uk-icon="pencil" class="btnEfect hover-primary m-2" uk-toggle="target: #modal-form" (click)="onEditRow(rowData)"></span>
+                <span uk-icon="pencil" class="btnEfect hover-primary m-2" uk-toggle="target: #modal-form-paketwisata" (click)="onEditRow(rowData)"></span>
                 <span uk-icon="info" class="btnEfect hover-primary m-2" (click)="onViewRow(rowData)"></span>
             </td>
         </tr>

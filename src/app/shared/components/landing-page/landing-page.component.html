@@ -184,13 +184,15 @@
                                     <h2 class="discover__title">IDR. {{ data.priceMask }}</h2>
                                 </div>
                             </div>
-                            <div class="uk-overlay uk-position-center show-on-hover" style="color: white;">
-                                <div class="discover__data">
+    
+                            <div class="uk-overlay uk-position-bottom show-on-hover" style="color: white;">
+                                <div class="discover__data mb-3">
                                     <h2 class="discover__title">{{data.title}}</h2>
-                                    <span class="discover__description">{{data.time}}</span>
+                                    <span class="discover__description">{{data.time}} | IDR. {{ data.priceMask }}</span>
                                 </div>
                                 <div [innerHTML]="data.description | keepHtml" style="zoom: 0.8;"></div>
                             </div>
+                            
                             <div class="uk-overlay uk-position-bottom hide-on-hover">
                                 <div class="discover__data">
                                     <h2 class="discover__title">{{data.title}}</h2>
@@ -198,7 +200,7 @@
                                 </div>
                             </div>
     
-                            <button class="button button--flex place__button hide-on-hover">
+                            <button class="button button--flex place__button">
                                 <i class="ri-arrow-right-line"></i>
                             </button>
     
@@ -283,6 +285,10 @@
         </div>
     </section>
 
+
+    <section class="history section" id="history"></section>
+
+
     <!--==================== VIDEO ====================-->
     <section class="video section" id="video">
         <h2 class="section__title">Video Tour</h2>
@@ -310,48 +316,41 @@
     <section class="fasilitas section" id="fasilitas">
         <h2 class="section__title">Fasilitas</h2>
         <div class="container grid">
-
             <div class="uk-grid-large uk-child-width-expand@s uk-text-center uk-margin-medium-top" uk-grid>
-
                 <div  *ngFor="let data of fasilitasList">
-                    <!-- <div class="uk-card uk-card-default uk-card-body"> -->
-                        <div class="image-flip" >
-                            <div class="mainflip flip-0">
-                                <div class="frontside">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <p class="custom-icon"> <i class="fa" [ngClass]="data.icon" aria-hidden="true"></i> </p>
-                                            <h5 class="card-title uk-margin-small-top">{{data.namaFasilitas}}</h5>
-                                            <!-- <p class="card-text">{{data.deskripsi}}</p> -->
-                                        </div>
+                    <div class="image-flip" >
+                        <div class="mainflip flip-0">
+                            <div class="frontside">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <p class="custom-icon"> <i class="fa" [ngClass]="data.icon" aria-hidden="true"></i> </p>
+                                        <h5 class="card-title uk-margin-small-top">{{data.namaFasilitas}}</h5>
+                                        <!-- <p class="card-text">{{data.deskripsi}}</p> -->
                                     </div>
                                 </div>
-                                <div class="backside" style="width: 100%;">
-                                    <div class="card">
-                                        <div class="card-body text-center p-2">
-                                            <h4 class="card-title">{{data.namaFasilitas}}</h4>
-                                            <p class="card-text">
-                                                {{data.deskripsi}}
-                                            </p>
-                                            
-                                        </div>
+                            </div>
+                            <div class="backside" style="width: 100%;">
+                                <div class="card">
+                                    <div class="card-body text-center p-2">
+                                        <h4 class="card-title">{{data.namaFasilitas}}</h4>
+                                        <p class="card-text">
+                                            {{data.deskripsi}}
+                                        </p>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <!-- </div> -->
+                    </div>
                 </div>
-                
             </div>
-
-            
         </div>
     </section>
 
 
     <!-- dummy -->
 
-    <section class="history section" id="history"></section>
+ 
     <section class="blogs section" id="blogs"></section>
 
     <!--==================== PLACES ====================-->
@@ -471,46 +470,7 @@
         </div>
     </section>
 
-    <!--==================== SUBSCRIBE ====================-->
-    <section class="subscribe section" id="subscribe">
-        <div class="subscribe__bg">
-            <div class="subscribe__container container">
-                <h2 class="section__title subscribe__title">Subscribe Our <br> Newsletter</h2>
-                <p class="subscribe__description">Subscribe to our newsletter and get a 
-                    special 30% discount.
-                </p>
 
-                <form action="" class="subscribe__form">
-                    <input type="text" placeholder="Enter email" class="subscribe__input">
-
-                    <button class="button">
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-    
-    <!--==================== SPONSORS ====================-->
-    <section class="sponsor section" id="sponsor">
-        <div class="sponsor__container container grid">
-            <div class="sponsor__content">
-                <img src="assets/img/sponsors1.png" alt="" class="sponsor__img">
-            </div>
-            <div class="sponsor__content">
-                <img src="assets/img/sponsors2.png" alt="" class="sponsor__img">
-            </div>
-            <div class="sponsor__content">
-                <img src="assets/img/sponsors3.png" alt="" class="sponsor__img">
-            </div>
-            <div class="sponsor__content">
-                <img src="assets/img/sponsors4.png" alt="" class="sponsor__img">
-            </div>
-            <div class="sponsor__content">
-                <img src="assets/img/sponsors5.png" alt="" class="sponsor__img">
-            </div>
-        </div>
-    </section>
 
     <!--==================== MAP ====================-->
     <section class="map section" id="map">
@@ -526,10 +486,14 @@
     <div class="footer__container container grid">
         <div class="footer__content grid">
             <div class="footer__data">
-                <h3 class="footer__title">Travel</h3>
-                <p class="footer__description">Travel you choose the <br> destination, 
+                <h3 class="footer__title">{{webInfo.value.websiteName}}</h3>
+                <!-- <p class="footer__description">Travel you choose the <br> destination, 
                     we offer you the <br> experience.
-                </p>
+                </p> -->
+                <div [innerHTML]="webInfo.value.address | keepHtml"></div>
+
+
+
                 <div>
                     <a href="https://www.facebook.com/" target="_blank" class="footer__social">
                         <i class="ri-facebook-box-fill"></i>

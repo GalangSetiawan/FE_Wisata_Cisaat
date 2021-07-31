@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceFake } from '../../../core/auth.service';
 import { TokenStorageService } from '../../../_services/token-storage.service';
-import { Router, NavigationEnd, RouterEvent } from '@angular/router';
+import {
+  Router,
+  // import as RouterEvent to avoid confusion with the DOM Event
+  Event as RouterEvent,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError
+} from '@angular/router'
 import { takeUntil, filter } from 'rxjs/operators';
 import { menuConstant } from 'src/app/_helpers/menu-constant/custom-widget.constant'
 import * as $ from 'jquery'
@@ -13,7 +21,7 @@ import * as $ from 'jquery'
 })
 export class ShellComponent implements OnInit {
   currentUser: any;
-
+  public loading = true
   public openedMenu:any;
   constructor(
     public authServiceFake: AuthServiceFake,
@@ -30,11 +38,33 @@ export class ShellComponent implements OnInit {
         });
       })
 
+      router.events.subscribe((event: RouterEvent) => {
+        this.navigationInterceptor(event)
+      })
+
     }
 
   ngOnInit() {
     this.currentUser = this.tokenStorage.getUser();
   }
+
+  
+  navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.loading = true
+    }
+    if (event instanceof NavigationEnd) {
+      this.loading = false
+    }
+    if (event instanceof NavigationCancel) {
+      this.loading = false
+    }
+    if (event instanceof NavigationError) {
+      this.loading = false
+    }
+  }
+
+
 
   logout(): void {
     console.log('logout')
