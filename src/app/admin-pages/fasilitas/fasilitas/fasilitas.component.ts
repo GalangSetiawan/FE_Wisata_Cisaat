@@ -123,7 +123,7 @@ export class FasilitasComponent implements OnInit {
               this.getAllFasilitas();
               this.onBatalTambahClick();
               Swal.fire( 'Yay Success!', 'Berhasil menambahkan data', 'success' )
-              UIkit.modal('#modal-form').hide();
+              UIkit.modal('#modal-form-fasilitas').hide();
 
             },
             (error: any) => {
@@ -139,7 +139,7 @@ export class FasilitasComponent implements OnInit {
               this.getAllFasilitas();
               this.onBatalTambahClick();
               Swal.fire( 'Yay Success!', 'Berhasil menyimpan data', 'success' )
-              UIkit.modal('#modal-form').hide();
+              UIkit.modal('#modal-form-fasilitas').hide();
 
             },
             (error: any) => {

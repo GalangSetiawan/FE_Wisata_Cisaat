@@ -3,6 +3,7 @@ declare var Swiper:any
 declare var ScrollReveal:any 
 import { Router } from '@angular/router';
 import * as $ from 'jquery'
+import * as _ from 'lodash'
 import { element } from 'protractor';
 import { takeUntil, take, find } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -12,6 +13,7 @@ import { WebPreferencesService } from 'src/app/_services/web-preferences/web-pre
 import { ContactService } from 'src/app/_services/contact/contact.service'
 import { FasilitasService } from 'src/app/_services/fasilitas/fasilitas.service'
 import { PaketWisataService } from 'src/app/_services/paket-wisata/paket-wisata.service'
+import { BeritaExclService } from 'src/app/_services/berita-excl/berita-excl.service'
 
 @Component({
   selector: 'app-landing-page',
@@ -23,7 +25,8 @@ export class LandingPageComponent implements OnInit {
   public contactList:any[] = [];
   public fasilitasList:any[] = [];
   public paketWisataList:any[] = [];
-  
+  public potensiDesaWisataList:any[] = [];
+  public dayaTarikDesaList:any[] = [];
   public webInfo: FormGroup;
 
   constructor(
@@ -32,6 +35,7 @@ export class LandingPageComponent implements OnInit {
     private fasilitasService:FasilitasService,
     private paketWisataService:PaketWisataService,
     private domSanitizer:DomSanitizer,
+    private beritaExclService:BeritaExclService,
 
     private webPreferencesService : WebPreferencesService,
     private contactService : ContactService,
@@ -54,16 +58,18 @@ export class LandingPageComponent implements OnInit {
     this.getContact();
     this.getFasilitas();
     this.getPaketWisata();
+    this.getPotensiDesaWisata();
+    this.getDayaTarikDesa();
   }
 
   public getContact(){
     this.contactService.getAllContact().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (r:any) =>{
-        console.log('success | getContact ==>',r)
+        // console.log('success | getContact ==>',r)
         this.contactList = r
         },
       error =>{
-        console.log('error | getContact ==>',error)
+        // console.log('error | getContact ==>',error)
       }
     );
   }
@@ -120,33 +126,79 @@ export class LandingPageComponent implements OnInit {
       return num >= item.value;
     });
     return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-}
+  }
 
-  public getPaketWisata(){
-    this.paketWisataService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+  public getDayaTarikDesa(){
+    this.beritaExclService.getByGroupName('daya-tarik').pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
-        console.log("success getAllPaketWisata ===>",result)
-        this.paketWisataList = result
-        
-        this.paketWisataList.forEach(data => {
+        console.log("success getDayaTarikDesa ===>",result)
+        this.dayaTarikDesaList = result;
+        this.dayaTarikDesaList.forEach(data => {
+         if(!_.isEmpty(data.imageNews)){
           data.imageUrl = [];
-          var base64 = this.convertToBase64(data.paketWisataImg.data)
+          var base64 = this.convertToBase64(data.imageNews.data)
           this.compressImage(base64, 400, 600).then(compressed400x600 => {
             data.imageUrl = compressed400x600
             data.imageUrlAsli = base64
           });
-
-
-          data.priceMask = this.currencyFormat(data.price,0)
-
-
+         }
         })
-        this.swiper();
-        console.log("success paketWisataList ===>",this.paketWisataList)
+      },
+      (error: any) => {
+        console.log("error getDayaTarikDesa ===>",error)
+      }
+    );
+  }
+
+  public getPotensiDesaWisata(){
+    this.beritaExclService.getByGroupName('potensi-desa-wisata').pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        // console.log("success getAllPaketWisata ===>",result)
+        this.potensiDesaWisataList = result
+        
+        this.potensiDesaWisataList.forEach(data => {
+          if(!_.isEmpty(data.imageNews)){
+            data.imageUrl = [];
+            var base64 = this.convertToBase64(data.imageNews.data)
+            this.compressImage(base64, 400, 600).then(compressed400x600 => {
+              data.imageUrl = compressed400x600
+              // data.imageUrlAsli = base64
+            });
+          }
+         
+        })
+        console.log("success potensiDesaWisataList ===>",this.potensiDesaWisataList)
 
       },
       (error: any) => {
-        console.log("error getAllPaketWisata ===>",error)
+        // console.log("error getAllPaketWisata ===>",error)
+      }
+    );
+  }
+
+
+  public getPaketWisata(){
+    this.paketWisataService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        // console.log("success getAllPaketWisata ===>",result)
+        this.paketWisataList = result
+        
+        this.paketWisataList.forEach(data => {
+          if(!_.isEmpty(data.paketWisataImg)){
+            data.imageUrl = [];
+            var base64 = this.convertToBase64(data.paketWisataImg.data)
+            this.compressImage(base64, 400, 600).then(compressed400x600 => {
+              data.imageUrl = compressed400x600
+              // data.imageUrlAsli = base64
+            });
+          }
+          data.priceMask = this.currencyFormat(data.price,0)
+        })
+        this.swiper();
+        // console.log("success paketWisataList ===>",this.paketWisataList)
+      },
+      (error: any) => {
+        // console.log("error getAllPaketWisata ===>",error)
       }
     );
   }
@@ -155,18 +207,18 @@ export class LandingPageComponent implements OnInit {
   public getFasilitas(){
     this.fasilitasService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
-        console.log("success getFasilitas ===>",result)
+        // console.log("success getFasilitas ===>",result)
         this.fasilitasList = result
       },
       (error: any) => {
-        console.log("error getFasilitas ===>",error)
+        // console.log("error getFasilitas ===>",error)
       }
     );
   }
 
   
   public generateMap(googleMapCode){
-    console.log('generate map ===>',googleMapCode);
+    // console.log('generate map ===>',googleMapCode);
     $( "#myid" ).remove();
     var e = $(googleMapCode);
     $('#box').append(e);    
@@ -180,11 +232,11 @@ export class LandingPageComponent implements OnInit {
   public downloadImage(){
     this.webPreferencesService.getWebsiteImage().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (r) =>{
-        console.log('success | downloadImage ==>',r)
+        // console.log('success | downloadImage ==>',r)
         this.webInfo.patchValue({imageUrl : r})
         },
       error =>{
-        console.log('error | downloadImage ==>',error)
+        // console.log('error | downloadImage ==>',error)
       }
     );
   }
@@ -192,7 +244,7 @@ export class LandingPageComponent implements OnInit {
   public getWebsiteInfo(){
     this.webPreferencesService.getWebsiteInfo().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
-        console.log("success getWebsiteInfo ===>",result)
+        // console.log("success getWebsiteInfo ===>",result)
         this.webInfo.patchValue({
           websiteName : result.websiteName,
           address : result.address,
@@ -204,7 +256,7 @@ export class LandingPageComponent implements OnInit {
         this.downloadImage();
       },
       (error: any) => {
-        console.log("error getWebsiteInfo ===>",error)
+        // console.log("error getWebsiteInfo ===>",error)
       }
     );
   }
@@ -213,7 +265,7 @@ export class LandingPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   public videoButton(){
-    console.log('videbutton click')
+    // console.log('videbutton click')
     /*==================== VIDEO ====================*/
     var videoFile:any = document.getElementById('video-file'),
     videoButton:any = document.getElementById('video-button'),
@@ -271,7 +323,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   public themeButton(){
-    console.log('tehemebuton click')
+    // console.log('tehemebuton click')
     /*==================== DARK LIGHT THEME ====================*/ 
     var themeButton = document.getElementById('theme-button')
     var darkTheme = 'dark-theme'
@@ -307,7 +359,7 @@ export class LandingPageComponent implements OnInit {
   public navActive(event){
 
 
-    console.log('navActive ==>',event);
+    // console.log('navActive ==>',event);
     
     //scroll to id
     var selectedId = event.target.name
@@ -317,7 +369,7 @@ export class LandingPageComponent implements OnInit {
     //highlight selected id
     var elements = []; 
     $("main").find("section").each(function(){ elements.push(this.id); });
-    console.log('elements ===>',elements);
+    // console.log('elements ===>',elements);
     
 
 

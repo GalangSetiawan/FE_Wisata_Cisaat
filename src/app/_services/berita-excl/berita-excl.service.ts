@@ -69,6 +69,10 @@ export class BeritaExclService {
   getTop5(){
     return this.http.get(this.baseUrl + '/top-5/all');
   }
+
+  getByGroupName(groupName){
+    return this.http.get(this.baseUrl + '/groups/'+groupName);
+  }
   
   getAll(){
     return this.http.get(this.baseUrl);

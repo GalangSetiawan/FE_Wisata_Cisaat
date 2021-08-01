@@ -26,6 +26,8 @@ export class StoriesComponent implements OnInit {
   public loading = true
   public slug;
   public beritaTop5:any[] = [];
+  public dayaTarikDesaList:any[] = [];
+  
   public berita;
   private ngUnsubscribe: Subject<boolean> = new Subject();
 
@@ -60,10 +62,39 @@ export class StoriesComponent implements OnInit {
     this.getBeritaTop5();
 
     if(this.slug != 'all'){
-      this.getBeritaBySlug(this.slug);
+      if(this.slug != 'daya-tarik') this.getBeritaBySlug(this.slug);
+    }
+    
+    if(this.slug == 'daya-tarik'){
+      this.getDayaTarikDesa();
     }
   }
 
+
+  public getDayaTarikDesa(){
+    this.loading = true
+    this.beritaExclService.getByGroupName('daya-tarik').pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        console.log("success getDayaTarikDesa ===>",result)
+        this.dayaTarikDesaList = result;
+        this.dayaTarikDesaList.forEach(data => {
+         if(!_.isEmpty(data.imageNews)){
+          data.imageUrl = [];
+          var base64 = this.convertToBase64(data.imageNews.data)
+          this.compressImage(base64, 400, 600).then(compressed400x600 => {
+            data.imageUrl = compressed400x600
+            data.imageUrlAsli = base64
+          });
+         }
+        })
+        this.loading = false
+
+      },
+      (error: any) => {
+        console.log("error getDayaTarikDesa ===>",error)
+      }
+    );
+  }
 
   public navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {

@@ -210,7 +210,7 @@ export class PaketWisataComponent implements OnInit {
               this.getAllPaketWisata();
               this.onBatalTambahClick();
               Swal.fire( 'Yay Success!', 'Berhasil menambahkan data', 'success' )
-              UIkit.modal('#modal-form').hide();
+              UIkit.modal('#modal-form-paketwisata').hide();
               this.swiper();
 
             },
@@ -227,7 +227,7 @@ export class PaketWisataComponent implements OnInit {
               this.getAllPaketWisata();
               this.onBatalTambahClick();
               Swal.fire( 'Yay Success!', 'Berhasil menyimpan data', 'success' )
-              UIkit.modal('#modal-form').hide();
+              UIkit.modal('#modal-form-paketwisata').hide();
               this.swiper();
             },
             (error: any) => {

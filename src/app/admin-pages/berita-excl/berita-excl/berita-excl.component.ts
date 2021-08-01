@@ -178,7 +178,7 @@ export class BeritaExclComponent implements OnInit {
               this.getAllBerita();
               this.onBatalTambahClick();
               Swal.fire( 'Yay Success!', 'Berhasil menambahkan data', 'success' )
-              UIkit.modal('#modal-form').hide();
+              UIkit.modal('#modal-form-postexcl').hide();
 
             },
             (error: any) => {
@@ -194,7 +194,7 @@ export class BeritaExclComponent implements OnInit {
               this.getAllBerita();
               this.onBatalTambahClick();
               Swal.fire( 'Yay Success!', 'Berhasil menyimpan data', 'success' )
-              UIkit.modal('#modal-form').hide();
+              UIkit.modal('#modal-form-postexcl').hide();
 
             },
             (error: any) => {
