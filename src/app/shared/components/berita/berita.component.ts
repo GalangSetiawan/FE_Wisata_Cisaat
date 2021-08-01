@@ -4,7 +4,15 @@ import { BeritaService } from 'src/app/_services/berita/berita.service'
 import { takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router, NavigationEnd, RouterEvent } from '@angular/router';
+import {
+  Router,
+  // import as RouterEvent to avoid confusion with the DOM Event
+  Event as RouterEvent,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError
+} from '@angular/router'
 import * as _ from 'lodash'
 import * as $ from 'jquery'
 @Component({
@@ -13,7 +21,7 @@ import * as $ from 'jquery'
   styleUrls: ['./berita.component.css']
 })
 export class BeritaComponent implements OnInit {
-
+  public loading = true
   public slug;
   public beritaTop5:any[] = [];
   public berita;
@@ -26,7 +34,12 @@ export class BeritaComponent implements OnInit {
 
     private router: Router,
 
-    ) {}
+    ) {
+      router.events.subscribe((event: RouterEvent) => {
+        this.navigationInterceptor(event)
+      })
+
+    }
 
   ngOnInit(): void {
 
@@ -54,7 +67,25 @@ export class BeritaComponent implements OnInit {
   }
 
 
+  public navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.loading = true
+    }
+    if (event instanceof NavigationEnd) {
+      this.loading = false
+    }
+    if (event instanceof NavigationCancel) {
+      this.loading = false
+    }
+    if (event instanceof NavigationError) {
+      this.loading = false
+    }
+  }
+
+
+
   public getBeritaBySlug(slug){
+    this.loading = true
     this.beritaService.getBeritaBySlug(slug).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaBySlug ===>",result)
@@ -66,7 +97,7 @@ export class BeritaComponent implements OnInit {
             this.berita.imageUrlAsli = base64
           });
         }
-        
+        this.loading = false
 
 
       },
@@ -84,6 +115,7 @@ export class BeritaComponent implements OnInit {
   }
 
   public getBeritaTop5(){
+    this.loading = true
     this.beritaService.getTop5().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaTop5 ===>",result)
@@ -100,10 +132,11 @@ export class BeritaComponent implements OnInit {
          }
         })
 
-
+        this.loading = false
       },
       (error: any) => {
         console.log("error getBeritaTop5 ===>",error)
+        
       }
     );
   }

@@ -63,7 +63,22 @@
             </div>
 
             <div class="home__social">
-                <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
+                <ng-container *ngIf="contactList.length > 0">
+                    <ng-container  *ngFor="let data of contactList">
+
+                        <a href="{{data.link}}" *ngIf="data.sosialMedia != 'Whatsapp' || data.sosialMedia != 'whatsapp'" target="_blank" class="home__social-link">
+                            <i class="ri-facebook-box-fill" *ngIf="data.sosialMedia == 'Facebook' || data.sosialMedia == 'facebook' "></i>
+                            <i class="ri-instagram-fill" *ngIf="data.sosialMedia == 'Instagram' || data.sosialMedia == 'instagram'"></i>
+                            <i class="ri-twitter-fill" *ngIf="data.sosialMedia == 'Twitter' || data.sosialMedia == 'twitter' "></i>                        
+                            <i class="ri-youtube-fill" *ngIf="data.sosialMedia == 'Youtube' || data.sosialMedia == 'youtube' "></i>                        
+                        </a>
+
+                        <!-- <a href="https://wa.me/62{{data.link}}" *ngIf="data.sosialMedia == 'Whatsapp' || data.sosialMedia == 'whatsapp'" target="_blank" class="home__social-link">
+                            <i class="ri-whatsapp-fill"></i>                        
+                        </a> -->
+                    </ng-container>
+                </ng-container>
+                <!-- <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
                     <i class="ri-facebook-box-fill"></i>
                 </a>
                 <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
@@ -71,7 +86,7 @@
                 </a>
                 <a href="https://twitter.com/" target="_blank" class="home__social-link">
                     <i class="ri-twitter-fill"></i>
-                </a>
+                </a> -->
             </div>
 
             <div class="home__info">
@@ -495,7 +510,24 @@
 
 
                 <div>
-                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+
+                    <ng-container *ngIf="contactList.length > 0">
+                        <ng-container  *ngFor="let data of contactList">
+    
+                            <a href="{{data.link}}" *ngIf="data.sosialMedia != 'Whatsapp' || data.sosialMedia != 'whatsapp'" target="_blank" class="footer__social">
+                                <i class="ri-facebook-box-fill" *ngIf="data.sosialMedia == 'Facebook' || data.sosialMedia == 'facebook' "></i>
+                                <i class="ri-instagram-fill" *ngIf="data.sosialMedia == 'Instagram' || data.sosialMedia == 'instagram'"></i>
+                                <i class="ri-twitter-fill" *ngIf="data.sosialMedia == 'Twitter' || data.sosialMedia == 'twitter' "></i>                        
+                                <i class="ri-youtube-fill" *ngIf="data.sosialMedia == 'Youtube' || data.sosialMedia == 'youtube' "></i>                        
+                            </a>
+    
+                            <a href="https://wa.me/62{{data.link}}" *ngIf="data.sosialMedia == 'Whatsapp' || data.sosialMedia == 'whatsapp'" target="_blank" class="footer__social">
+                                <i class="ri-whatsapp-fill"></i>                        
+                            </a>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- <a href="https://www.facebook.com/" target="_blank" class="footer__social">
                         <i class="ri-facebook-box-fill"></i>
                     </a>
                     <a href="https://twitter.com/" target="_blank" class="footer__social">
@@ -506,7 +538,7 @@
                     </a>
                     <a href="https://www.youtube.com/" target="_blank" class="footer__social">
                         <i class="ri-youtube-fill"></i>
-                    </a>
+                    </a> -->
                 </div>
             </div>
 

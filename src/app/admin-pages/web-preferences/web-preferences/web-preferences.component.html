@@ -36,15 +36,21 @@
                 </div>
 
                 <div class="home__social  mb-5">
-                    <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
-                        <i class="ri-facebook-box-fill"></i>
-                    </a>
-                    <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
-                        <i class="ri-instagram-fill"></i>
-                    </a>
-                    <a href="https://twitter.com/" target="_blank" class="home__social-link">
-                        <i class="ri-twitter-fill"></i>
-                    </a>
+                    <ng-container *ngIf="contactList.length > 0">
+                        <ng-container  *ngFor="let data of contactList">
+
+                            <a href="{{data.link}}" *ngIf="data.sosialMedia != 'Whatsapp' || data.sosialMedia != 'whatsapp'" target="_blank" class="home__social-link">
+                                <i class="ri-facebook-box-fill" *ngIf="data.sosialMedia == 'Facebook' || data.sosialMedia == 'facebook' "></i>
+                                <i class="ri-instagram-fill" *ngIf="data.sosialMedia == 'Instagram' || data.sosialMedia == 'instagram'"></i>
+                                <i class="ri-twitter-fill" *ngIf="data.sosialMedia == 'Twitter' || data.sosialMedia == 'twitter' "></i>                        
+                                <i class="ri-youtube-fill" *ngIf="data.sosialMedia == 'Youtube' || data.sosialMedia == 'youtube' "></i>                        
+                            </a>
+    
+                            <a href="https://wa.me/62{{data.link}}" *ngIf="data.sosialMedia == 'Whatsapp' || data.sosialMedia == 'whatsapp'" target="_blank" class="home__social-link">
+                                <i class="ri-whatsapp-fill"></i>                        
+                            </a>
+                        </ng-container>
+                    </ng-container>
                 </div>
 
                 <div class="home__info mb-5" >
@@ -84,7 +90,7 @@
                                 <div class="uk-margin">
                                     <label class="uk-form-label" for="form-stacked-text">Judul Website</label>
                                     <div class="uk-form-controls">
-                                        <input class="uk-input" id="form-stacked-text" formControlName="websiteName" type="text" placeholder="Nama Website"  [ngClass]="{ 'uk-form-danger':  submitted && f.websiteName.errors }" >
+                                        <input class="uk-input" id="form-stacked-text" [disabled]="!modeEdit" formControlName="websiteName" type="text" placeholder="Nama Website"  [ngClass]="{ 'uk-form-danger':  submitted && f.websiteName.errors }" >
                                         <div *ngIf="submitted && f.websiteName.errors" class="text-danger">
                                             <div *ngIf="f.websiteName.errors.required">Title is required</div>
                                         </div>
@@ -94,7 +100,7 @@
                                 <div class="uk-margin">
                                     <div class="uk-form-label">Alamat</div>
                                     <div class="uk-form-controls">
-                                        <!-- <dx-html-editor formControlName="address" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.address.errors }">
+                                        <!-- <dx-html-editor [disabled]="!modeEdit" formControlName="address" [height]="500" [ngClass]=" { 'errorStyle' : submitted && f.address.errors }">
                                             <dxo-toolbar>
                                                 <dxi-item formatName="undo"></dxi-item>
                                                 <dxi-item formatName="redo"></dxi-item>
@@ -114,7 +120,7 @@
                                             </dxo-toolbar>
                                         </dx-html-editor>    -->
 
-                                        <p-editor formControlName="address" [style]="{'height':'320px'}">
+                                        <p-editor [disabled]="!modeEdit" formControlName="address" [style]="{'height':'320px'}">
                                             <ng-template pTemplate="header">
                                                 <span class="ql-format-group">
                                                     <span title="Bold" class="ql-format-button ql-bold"></span>
@@ -139,7 +145,7 @@
                                 <div class="uk-margin">
                                     <div class="uk-form-label">Google Map</div>
                                     <div class="uk-form-controls">
-                                        <textarea class="uk-textarea" rows="5" (change)="generateMap(f.mapLocation.value)"  formControlName="mapLocation" placeholder="Google Map embeded" [ngClass]=" { 'errorStyle' : submitted && f.mapLocation.errors }"></textarea>
+                                        <textarea class="uk-textarea" rows="5" (change)="generateMap(f.mapLocation.value)"  [disabled]="!modeEdit" formControlName="mapLocation" placeholder="Google Map embeded" [ngClass]=" { 'errorStyle' : submitted && f.mapLocation.errors }"></textarea>
                                         <div *ngIf="submitted && f.mapLocation.errors" class="text-danger">
                                             <div *ngIf="f.mapLocation.errors.required">Title is required</div>
                                         </div>
@@ -150,6 +156,7 @@
                                 <p class="uk-text-right">
                                     <button class="uk-button uk-button-primary" (click)="toggleMode(true)" *ngIf="!modeEdit ;else saveButton">Edit</button>
                                     <ng-template #saveButton>
+                                        <a (click)="patchValue(); toggleMode(false)" style="text-decoration: none; color: grey;" class="uk-button uk-button-default">Batal</a>
                                         <button type="submit" class="uk-button uk-button-primary">Simpan</button>
                                     </ng-template>
                                     
@@ -204,14 +211,16 @@
                                         </p-cellEditor>
                                     </td>
 
-                                    <td pEditableColumn>
+                                    <td pEditableColumn [ngClass]="[ !editing ? 'smallText' : '']">
                                         <p-cellEditor>
                                             <ng-template pTemplate="input">
                                                 <input pInputText type="text"  [disabled]="!editing" [(ngModel)]="rowData.link">
                                             </ng-template>
-                                            <ng-template pTemplate="output">
-                                                <a href="{{rowData?.link}}" target="_blank">{{rowData?.link}}</a>                                            
+                                            <ng-template pTemplate="output" >
+                                                <a  *ngIf="rowData.sosialMedia != 'Whatsapp'" href="{{rowData?.link}}" target="_blank">{{rowData?.link}}</a>                                            
+                                                <a  *ngIf="rowData.sosialMedia == 'Whatsapp'" href="https://wa.me/62{{rowData?.link}}" target="_blank">{{rowData?.link}}</a>                                            
                                             </ng-template>
+                                            
                                         </p-cellEditor>
                                     </td>
 

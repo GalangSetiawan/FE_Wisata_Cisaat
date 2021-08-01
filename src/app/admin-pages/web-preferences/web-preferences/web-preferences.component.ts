@@ -24,7 +24,7 @@ export class WebPreferencesComponent implements OnInit {
   public oldImageData:any
   public viewMode = 'general'
   public contactList:any[] = [];
-  public modeEdit = false;
+  public modeEdit:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private tokenStorage: TokenStorageService,
@@ -38,15 +38,16 @@ export class WebPreferencesComponent implements OnInit {
 
   ngOnInit(): void {
     this.patchValue();
+    this.getAllContact();
   }
 
   get f() { return this.inputForm.controls; }
 
   public initForm(){
     this.inputForm =  this.formBuilder.group({
-      websiteName     : ['', Validators.required],
-      mapLocation     : ['', Validators.required],
-      address         : ['', Validators.required],
+      websiteName     : [{value :'', disabled: this.modeEdit}, Validators.required,],
+      mapLocation     : [{value :'', disabled: this.modeEdit}, Validators.required,],
+      address         : [{value :'', disabled: this.modeEdit}, Validators.required,],
       websiteImage    : [null],
       websiteImageName: [null],
       imageUrl        : [null],
@@ -58,8 +59,10 @@ export class WebPreferencesComponent implements OnInit {
     console.log('onMapChange ===>',data);
   }
 
+
   public toggleMode(value){
     this.modeEdit = value;
+    console.log('modeEdit ===>',this.modeEdit)
   }
 
   public getAllContact(){
@@ -74,7 +77,7 @@ export class WebPreferencesComponent implements OnInit {
     );
   }
   public generateMap(googleMapCode){
-    console.log('generate map ===>',googleMapCode);
+    // console.log('generate map ===>',googleMapCode);
     $( "#myid" ).remove();
     var e = $(googleMapCode);
     $('#box').append(e);    
@@ -87,7 +90,7 @@ export class WebPreferencesComponent implements OnInit {
   public downloadImage(){
     this.webPreferencesService.getWebsiteImage().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (r) =>{
-        console.log('success | downloadImage ==>',r)
+        // console.log('success | downloadImage ==>',r)
         this.inputForm.patchValue({imageUrl : r})
         },
       error =>{

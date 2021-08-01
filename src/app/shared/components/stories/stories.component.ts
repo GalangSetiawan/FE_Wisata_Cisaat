@@ -4,7 +4,17 @@ import { BeritaExclService } from 'src/app/_services/berita-excl/berita-excl.ser
 import { takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router, NavigationEnd, RouterEvent } from '@angular/router';
+
+import {
+  Router,
+  // import as RouterEvent to avoid confusion with the DOM Event
+  Event as RouterEvent,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError
+} from '@angular/router'
+
 import * as _ from 'lodash'
 import * as $ from 'jquery'
 @Component({
@@ -13,7 +23,7 @@ import * as $ from 'jquery'
   styleUrls: ['./stories.component.css']
 })
 export class StoriesComponent implements OnInit {
-
+  public loading = true
   public slug;
   public beritaTop5:any[] = [];
   public berita;
@@ -26,7 +36,11 @@ export class StoriesComponent implements OnInit {
 
     private router: Router,
 
-    ) {}
+    ) {
+      router.events.subscribe((event: RouterEvent) => {
+        this.navigationInterceptor(event)
+      })
+    }
 
   ngOnInit(): void {
     $('.nav__menu a[name=history]').addClass('active-link')
@@ -39,8 +53,6 @@ export class StoriesComponent implements OnInit {
         this.slug = 'all'
       }
     })
-    
-
   
     this.slug = this.activatedRoute.snapshot.paramMap.get('slug')
     console.log('slug ===>',this.slug)
@@ -53,7 +65,24 @@ export class StoriesComponent implements OnInit {
   }
 
 
+  public navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.loading = true
+    }
+    if (event instanceof NavigationEnd) {
+      this.loading = false
+    }
+    if (event instanceof NavigationCancel) {
+      this.loading = false
+    }
+    if (event instanceof NavigationError) {
+      this.loading = false
+    }
+  }
+
+
   public getBeritaBySlug(slug){
+    this.loading = true
     this.beritaExclService.getBeritaBySlug(slug).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaBySlug ===>",result)
@@ -66,7 +95,7 @@ export class StoriesComponent implements OnInit {
           });
         }
         
-
+        this.loading = false
 
       },
       (error: any) => {
@@ -83,6 +112,7 @@ export class StoriesComponent implements OnInit {
   }
 
   public getBeritaTop5(){
+    this.loading = true
     this.beritaExclService.getTop5().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaTop5 ===>",result)
@@ -98,7 +128,7 @@ export class StoriesComponent implements OnInit {
           });
          }
         })
-
+        this.loading = false
 
       },
       (error: any) => {
