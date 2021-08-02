@@ -12,21 +12,17 @@
                 </li>
 
                 <li class="nav__item">
-                    <a [routerLink]="['/home']" name="discover" class="nav__link">Discover</a>
+                    <a [routerLink]="['/home']" name="discover" class="nav__link">Tawaran</a>
                 </li>
-
 
                 <li class="nav__item">
                     <a [routerLink]="['/berita', 'all']" name="blogs" (click)="navActive($event)" class="nav__link" >Blogs</a>
                 </li>
 
                 <li class="nav__item">
-                    <a [routerLink]="['/story', 'all']" name="history" (click)="navActive($event)" class="nav__link">History</a>
+                    <a [routerLink]="['/story', 'all']" name="history" (click)="navActive($event)" class="nav__link">Story</a>
                 </li>
                 
-                <li class="nav__item">
-                    <a [routerLink]="['/home']" name="place" class="nav__link">Places</a>
-                </li>
                 <li class="nav__item">
                     <a class="nav__link" (click)="login()" >Login</a>
                 </li>

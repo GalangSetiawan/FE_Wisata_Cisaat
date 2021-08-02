@@ -59,7 +59,7 @@ export class BeritaComponent implements OnInit {
     this.slug = this.activatedRoute.snapshot.paramMap.get('slug')
     console.log('slug ===>',this.slug)
     
-    this.getBeritaTop5();
+    this.getAllBerita();
 
     if(this.slug != 'all'){
       this.getBeritaBySlug(this.slug);
@@ -114,11 +114,11 @@ export class BeritaComponent implements OnInit {
     
   }
 
-  public getBeritaTop5(){
+  public getAllBerita(){
     this.loading = true
-    this.beritaService.getTop5().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    this.beritaService.getAllBerita().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
-        console.log("success getBeritaTop5 ===>",result)
+        console.log("success getAllBerita ===>",result)
         this.beritaTop5 = result;
 
         this.beritaTop5.forEach(data => {
@@ -135,7 +135,7 @@ export class BeritaComponent implements OnInit {
         this.loading = false
       },
       (error: any) => {
-        console.log("error getBeritaTop5 ===>",error)
+        console.log("error getAllBerita ===>",error)
         
       }
     );

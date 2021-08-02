@@ -1,0 +1,21 @@
+.uk-input, .uk-select, .uk-textarea{
+    border: 1px solid #14505C;
+}
+
+
+.uk-button-danger:disabled, .uk-button-default:disabled, .uk-button-primary:disabled, .uk-button-secondary:disabled {
+    background-color: #e5e5e5;
+    color: #999;
+    border-color: #e5e5e5;
+    cursor: not-allowed;
+}
+
+.uk-button{
+    border-radius: 0 !important;
+}
+
+.uk-button-primary {
+    background-color: #14505C;
+    color: #fff;
+    border: 1px solid transparent;
+}

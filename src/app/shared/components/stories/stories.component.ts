@@ -144,7 +144,7 @@ export class StoriesComponent implements OnInit {
 
   public getBeritaTop5(){
     this.loading = true
-    this.beritaExclService.getTop5().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    this.beritaExclService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (result:any) => {
         console.log("success getBeritaTop5 ===>",result)
         this.beritaTop5 = result;

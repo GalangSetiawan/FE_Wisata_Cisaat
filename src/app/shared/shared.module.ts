@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from 'src/app/_helpers/html-pipe/html-pipe.module'
 
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -23,6 +23,7 @@ const materialModules = [
     CommonModule, 
     RouterModule, 
     FormsModule,
+    ReactiveFormsModule,
     PipesModule,
     ...materialModules],
 

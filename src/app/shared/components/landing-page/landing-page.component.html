@@ -135,10 +135,11 @@
                                 </div>
                             </div>
     
-                            <div class="uk-overlay uk-position-bottom show-on-hover" style="color: white;">
+                            <div class="uk-overlay uk-position-bottom show-on-hover"  style="color: white;">
                                 <div class="discover__data mb-3">
                                     <h2 class="discover__title">{{data.title}}</h2>
-                                    <span class="discover__description">{{data.time}} | IDR. {{ data.priceMask }}</span>
+                                    <span class="discover__description">{{data.time}} | IDR. {{ data.priceMask }} | <a *ngIf="selectedWA != null" (click)="onTawaranClick(data,$event)" style="color: rgb(16, 145, 224);">Pesan sekarang</a></span>
+                                    
                                 </div>
                                 <div [innerHTML]="data.description | keepHtml" style="zoom: 0.8;"></div>
                             </div>
@@ -150,9 +151,9 @@
                                 </div>
                             </div>
     
-                            <button class="button button--flex place__button">
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
+                            <!-- <button class="button place__button" (click)="onTawaranClick(data,$event)" >
+                                <i class="ri-arrow-right-line" ></i>
+                            </button> -->
     
                         </div>
                     </li>
@@ -244,8 +245,7 @@
         <h2 class="section__title">Video Tour</h2>
 
         <div class="video__container container">
-            <p class="video__description">Find out more with our video of the most beautiful and 
-                pleasant places for you and your family.
+            <p class="video__description">Desa yang berada pada ketinggian 780 mdpl ini memiliki segudang daya tarik pariwisata yang menghadirkan pengalaman berwisata dengan nuansa pedasaan yang perlu kalian Explore.
             </p>
 
             <div class="video__content">
@@ -342,6 +342,81 @@
         </div>
     </section>
     <!--==================== MAP ====================-->
+
+
+
+    <section class="sejarah section" id="sejarah">
+        <h2 class="section__title">Riwayat Hidup Desa Cisaat</h2>
+        <br><br><br>
+        <div class="container grid">
+            <div class="main-timeline">
+                    
+                <span *ngFor="let sejarah of sejarahList">
+                    <div class="timeline" *ngIf="sejarah.kejadianBaik != '' ">
+                        <a class="timeline-content">
+                            <div class="timeline-year">{{sejarah.tahun}}</div>
+                            <div class="timeline-icon"><i class="fa fa-hand-paper-o"></i></div>
+                            <h3 class="title">Kejadian Baik</h3>
+                            <!-- <p class="description"> -->
+                                <div style="color: var(--text-color);" [innerHTML]="sejarah.kejadianBaik | keepHtml"></div>
+                            <!-- </p> -->
+                        </a>
+                    </div>
+                    <div class="timeline" *ngIf="sejarah.kejadianBuruk != '' ">
+                        <a class="timeline-content">
+                            <div class="timeline-year">{{sejarah.tahun}}</div>
+                            <div class="timeline-icon"><i class="fa fa-hand-rock-o"></i></div>
+                            <h3 class="title">Kejadian Buruk</h3>
+                            <!-- <p class="description"> -->
+                                <div style="color: var(--text-color);" [innerHTML]="sejarah.kejadianBuruk | keepHtml"></div>
+                            <!-- </p> -->
+                        </a>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="contact section" id="contact" *ngIf="selectedWA != null">
+        <h2 class="section__title">Kontak</h2>
+        <div class="container grid">
+            <div class="uk-grid-item-match uk-flex-middle uk-width-expand@m">
+				<div class="uk-panel">
+					<div class="uk-margin">
+						<form [formGroup]="contactModel" method="post" class="uk-grid-small" uk-grid (ngSubmit)="onSendMessage()">
+							<div class="uk-width-1-1">
+								<label class="uk-form-label" for="name">Nama</label>
+								<input type="text" name="name" id="form-s-text" formControlName="nama" placeholder="Masukan nama..." class="uk-input">
+							</div>
+
+                            <div class="uk-width-1-2@s">
+                                <label class="uk-form-label" for="email">E-Mail</label>
+                                <input class="uk-input" type="email" formControlName="email" placeholder="email">
+                            </div>
+                            <div class="uk-width-1-2@s">
+                                <label class="uk-form-label" for="subject">No. Telepon</label>
+                                <input class="uk-input" type="text" formControlName="telp" placeholder="no. telepon">
+                            </div>
+                            
+				
+							<div class="uk-width-1-1">
+								<label class="uk-form-label" for="message">Pesan</label>
+								<textarea name="message" id="messafe" rows="5" formControlName="pesan" placeholder="tulis pesan..." class="uk-textarea"></textarea>
+							</div>
+
+                            <div class="uk-width-1-1">
+                                <button type="submit" [disabled]="!contactModel.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom uk-button-large">Kirim</button>
+
+                            </div>
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+
+      
+    </section>
 
 </main>
 

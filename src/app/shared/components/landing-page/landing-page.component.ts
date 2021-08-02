@@ -14,6 +14,7 @@ import { ContactService } from 'src/app/_services/contact/contact.service'
 import { FasilitasService } from 'src/app/_services/fasilitas/fasilitas.service'
 import { PaketWisataService } from 'src/app/_services/paket-wisata/paket-wisata.service'
 import { BeritaExclService } from 'src/app/_services/berita-excl/berita-excl.service'
+import { SejarahService } from 'src/app/_services/sejarah/sejarah.service'
 
 @Component({
   selector: 'app-landing-page',
@@ -26,8 +27,11 @@ export class LandingPageComponent implements OnInit {
   public fasilitasList:any[] = [];
   public paketWisataList:any[] = [];
   public potensiDesaWisataList:any[] = [];
+  public sejarahList:any[] = [];
   public dayaTarikDesaList:any[] = [];
   public webInfo: FormGroup;
+  public contactModel : FormGroup;
+  public selectedWA:any = null
 
   constructor(
     private router: Router,
@@ -36,6 +40,7 @@ export class LandingPageComponent implements OnInit {
     private paketWisataService:PaketWisataService,
     private domSanitizer:DomSanitizer,
     private beritaExclService:BeritaExclService,
+    private sejarahService:SejarahService,
 
     private webPreferencesService : WebPreferencesService,
     private contactService : ContactService,
@@ -50,6 +55,14 @@ export class LandingPageComponent implements OnInit {
       imageUrl        : [null],
       id              : [0]
     })
+
+    this.contactModel =  this.formBuilder.group({
+      nama     : ['', Validators.required],
+      email    : null,
+      telp     : ['', Validators.required],
+      pesan    : ['', Validators.required],
+     
+    })
   }
 
   ngOnInit(): void {
@@ -59,14 +72,60 @@ export class LandingPageComponent implements OnInit {
     this.getFasilitas();
     this.getPaketWisata();
     this.getPotensiDesaWisata();
+    this.getSejarah();
     this.getDayaTarikDesa();
   }
 
+  public async getSelectedWA(){
+    await this.contactList.forEach(contact => {
+      if(contact.sosialMedia.includes('Whatsapp')) this.selectedWA = contact
+      else if (contact.sosialMedia.includes('whatsapp')) this.selectedWA = contact
+      else null
+    });
+
+    console.log('getSelectedWA ===>',this.selectedWA)
+  }
+
+  public onTawaranClick(data,event){
+    console.log('onTawaranClick data ===>',data );
+    // console.log('onTawaranClick event ==>',event );
+
+    var urlTemplate = 'https://wa.me/'+ this.contactModel.value.telp +'?text='
+    var urlBreakLine = '%0A'
+    var urlHeader = 'Halo admin *Desa Wisata Cisaat*' + urlBreakLine + 'Saya tertarik dengan paket wisata *' +data.title+ '* yang ditawarkan, apakah ada info lebih lanjut yang bisa saya dapatkan?' 
+    var URLresult = urlTemplate  + urlHeader
+    document.location.href = URLresult, "_blank";
+  }
+
+  public async onSendMessage(){
+    console.log('onSendMessage ==>',this.contactModel.value)
+
+    var selectedWA:any
+    await this.contactList.forEach(contact => {
+      if(contact.sosialMedia.includes('Whatsapp')) selectedWA = contact
+      else if (contact.sosialMedia.includes('whatsapp')) selectedWA = contact
+      else null
+    });
+
+    var urlTemplate = 'https://wa.me/'+ selectedWA.link +'?text='
+    var urlBreakLine = '%0A'
+    var urlHeader = 'Halo, saya ' +this.contactModel.value.nama + ' [ '+ this.contactModel.value.email +' ] '+ urlBreakLine + ' saya ingin bertanya '+ urlBreakLine
+    var urlPesan = this.contactModel.value.pesan
+
+    var URLresult = urlTemplate + urlHeader + urlPesan
+    console.log('URLresult ===>',URLresult)
+    // document.location.href = URLresult, "_blank";
+
+    return URLresult
+  }
   public getContact(){
     this.contactService.getAllContact().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (r:any) =>{
-        // console.log('success | getContact ==>',r)
+        console.log('success | getContact ==>',r)
         this.contactList = r
+
+        this.getSelectedWA()
+
         },
       error =>{
         // console.log('error | getContact ==>',error)
@@ -74,6 +133,17 @@ export class LandingPageComponent implements OnInit {
     );
   }
 
+  public getSejarah(){
+    this.sejarahService.getAll().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (result:any) => {
+        console.log("success getSejarah ===>",result)
+        this.sejarahList = result
+      },
+      (error: any) => {
+        console.log("error getSejarah ===>",error)
+      }
+    );
+  }
   public convertToBase64(data) {
     let TYPED_ARRAY = new Uint8Array(data);
     // const STRING_CHAR = String.fromCharCode.apply(null, TYPED_ARRAY);
